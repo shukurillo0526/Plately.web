@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 
 import { PageType, BetaRegistration } from './types';
+import logo from './assets/logo.png';
 import Home from './components/Home';
 import Features from './components/Features';
 import Solutions from './components/Solutions';
@@ -244,7 +245,7 @@ export default function App() {
               className="flex items-center space-x-2.5 cursor-pointer group"
             >
               <div className="w-11 h-11 rounded-xl overflow-hidden bg-white group-hover:scale-105 transition-all flex items-center justify-center shadow-sm border border-cream-200">
-                <img src="/logo.png" alt="Plately" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                <img src={logo} alt="Plately" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
               </div>
               <div>
                 <span className="text-xl font-bold font-display tracking-tight text-cream-900">Plately</span>
@@ -469,7 +470,7 @@ export default function App() {
           <div className="md:col-span-4 space-y-4">
             <div className="flex items-center space-x-2.5">
               <div className="w-9 h-9 rounded-lg overflow-hidden bg-white flex items-center justify-center shadow-sm border border-cream-200">
-                <img src="/logo.png" alt="Plately" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                <img src={logo} alt="Plately" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
               </div>
               <span className="text-lg font-bold font-display text-cream-900 tracking-tight">Plately</span>
             </div>

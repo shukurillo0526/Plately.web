@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import logo from '../assets/logo.png';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Sparkles, 
@@ -251,7 +252,7 @@ export default function Home({ onNavigate, onOpenBetaModal }: HomeProps) {
                       {/* App Header (Screenshot 1) */}
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-2">
-                          <img src="/logo.png" alt="Plately Logo" className="w-6 h-6 rounded-md object-cover" referrerPolicy="no-referrer" />
+                          <img src={logo} alt="Plately Logo" className="w-6 h-6 rounded-md object-cover" referrerPolicy="no-referrer" />
                           <span className="text-xl font-extrabold font-display tracking-tight text-white">Plately</span>
                         </div>
                         
