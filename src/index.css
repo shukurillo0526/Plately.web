@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", var(--font-sans);
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-brand-50: #fff8f0;
+  --color-brand-100: #ffeedb;
+  --color-brand-200: #ffd7aa;
+  --color-brand-300: #fba858;
+  --color-brand-400: #f98b25;
+  --color-brand-500: #e07a00;
+  --color-brand-600: #d96b00;
+  --color-brand-700: #b75200;
+  --color-brand-800: #913f00;
+  --color-brand-900: #773300;
+  --color-brand-950: #421b00;
+  
+  --color-accent-50: #fefcee;
+  --color-accent-100: #fdf9cf;
+  --color-accent-200: #faf0a2;
+  --color-accent-300: #f6e16b;
+  --color-accent-400: #f1cc33;
+  --color-accent-500: #f4b942;
+  --color-accent-600: #c89a2f;
+  --color-accent-700: #a67c20;
+  --color-accent-800: #845f1b;
+  --color-accent-900: #6b4d18;
+  --color-accent-950: #3e2a0b;
+  
+  --color-cream-50: #f8f6f2;
+  --color-cream-100: #f1ede4;
+  --color-cream-200: #e6dfd3;
+  --color-cream-300: #d6ccbc;
+  --color-cream-400: #8e8270;
+  --color-cream-500: #7a6f5e;
+  --color-cream-600: #5b6370;
+  --color-cream-700: #444b55;
+  --color-cream-800: #2e353d;
+  --color-cream-900: #1f252c;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-cream-50);
+    color: var(--color-cream-900);
+  }
+}

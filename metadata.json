@@ -1,0 +1,6 @@
+{
+  "name": "Plately",
+  "description": "The smart kitchen and food ecosystem that helps you digitize your fridge, cook with AI recipes, log health metrics, and eliminate food waste.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
