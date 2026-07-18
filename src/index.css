@@ -6,6 +6,7 @@
   --font-display: "Outfit", var(--font-sans);
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
+  /* Plately Core Brand - Bright Luminous Orange */
   --color-brand-50: #fff8f0;
   --color-brand-100: #ffeedb;
   --color-brand-200: #ffd7aa;
@@ -18,34 +19,51 @@
   --color-brand-900: #773300;
   --color-brand-950: #421b00;
   
-  --color-accent-50: #fefcee;
-  --color-accent-100: #fdf9cf;
-  --color-accent-200: #faf0a2;
-  --color-accent-300: #f6e16b;
-  --color-accent-400: #f1cc33;
-  --color-accent-500: #f4b942;
-  --color-accent-600: #c89a2f;
-  --color-accent-700: #a67c20;
-  --color-accent-800: #845f1b;
-  --color-accent-900: #6b4d18;
-  --color-accent-950: #3e2a0b;
+  /* Accent - Neon Emerald */
+  --color-accent-50: #ecfdf5;
+  --color-accent-100: #d1fae5;
+  --color-accent-200: #a7f3d0;
+  --color-accent-300: #6ee7b7;
+  --color-accent-400: #34d399;
+  --color-accent-500: #10b981;
+  --color-accent-600: #059669;
+  --color-accent-700: #047857;
+  --color-accent-800: #065f46;
+  --color-accent-900: #064e3b;
+  --color-accent-950: #022c22;
   
-  --color-cream-50: #f8f6f2;
-  --color-cream-100: #f1ede4;
-  --color-cream-200: #e6dfd3;
-  --color-cream-300: #d6ccbc;
-  --color-cream-400: #8e8270;
-  --color-cream-500: #7a6f5e;
-  --color-cream-600: #5b6370;
-  --color-cream-700: #444b55;
-  --color-cream-800: #2e353d;
-  --color-cream-900: #1f252c;
+  /* Dark Glassmorphic Base - Replacing Cream */
+  --color-cream-50: #ffffff;
+  --color-cream-100: #f1f5f9;
+  --color-cream-200: #e2e8f0;
+  --color-cream-300: #cbd5e1;
+  --color-cream-400: #94a3b8;
+  --color-cream-500: #64748b;
+  --color-cream-600: #475569;
+  --color-cream-700: #334155;
+  --color-cream-800: #1e293b;
+  --color-cream-900: #0f172a;
+  --color-cream-950: #020617;
 }
 
 @layer base {
   body {
     font-family: var(--font-sans);
-    background-color: var(--color-cream-50);
-    color: var(--color-cream-900);
+    /* Set the base background to slate-950 (which was cream-950) */
+    background-color: var(--color-cream-950);
+    color: var(--color-cream-100);
+  }
+}
+
+/* Custom utility for pure glass panels */
+@layer utilities {
+  .glass-panel {
+    background-color: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .glass-panel-hover:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.15);
   }
 }

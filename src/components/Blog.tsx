@@ -75,13 +75,13 @@ export default function Blog() {
       
       {/* HEADER */}
       <section className="text-center pt-12 max-w-4xl mx-auto px-4">
-        <span className="text-xs font-bold text-brand-700 bg-brand-50 border border-brand-200 px-3 py-1 rounded-full uppercase tracking-wider">
+        <span className="text-xs font-bold text-brand-400 bg-brand-500/10 border border-brand-500/30 px-3 py-1 rounded-full uppercase tracking-wider">
           Resources & Articles
         </span>
-        <h1 className="text-4xl md:text-5xl font-extrabold font-display text-cream-900 mt-4 tracking-tight leading-tight">
+        <h1 className="text-4xl md:text-5xl font-extrabold font-display text-white mt-4 tracking-tight leading-tight">
           Read up on smart kitchen hacks.
         </h1>
-        <p className="text-sm md:text-base text-cream-600 font-sans mt-4 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-sm md:text-base text-slate-400 font-sans mt-4 max-w-2xl mx-auto leading-relaxed">
           Explore articles, technical updates, and sustainable cooking logs compiled by our localized teams and health cooks.
         </p>
       </section>
@@ -92,34 +92,34 @@ export default function Blog() {
           {posts.map(post => (
             <div 
               key={post.id}
-              className="bg-white rounded-3xl border border-cream-200 p-6 shadow-sm flex flex-col justify-between hover:border-brand-300 hover:shadow-md transition-all group cursor-pointer"
+              className="glass-panel rounded-3xl border border-white/10 p-6 shadow-sm flex flex-col justify-between hover:border-brand-500/40 hover:shadow-md transition-all group cursor-pointer"
               onClick={() => setSelectedPost(post)}
             >
               <div className="space-y-4">
-                <div className="flex items-center justify-between text-xs font-mono text-cream-400">
-                  <span className="bg-brand-50 text-brand-700 px-2.5 py-1 rounded-full font-bold">
+                <div className="flex items-center justify-between text-xs font-mono text-slate-600">
+                  <span className="bg-brand-500/10 text-brand-400 px-2.5 py-1 rounded-full font-bold">
                     {post.category}
                   </span>
                   <span>{post.date}</span>
                 </div>
 
-                <h3 className="text-lg font-bold font-display text-cream-900 group-hover:text-brand-600 transition-colors">
+                <h3 className="text-lg font-bold font-display text-white group-hover:text-brand-500 transition-colors">
                   {post.title}
                 </h3>
 
-                <p className="text-xs text-cream-500 font-sans leading-relaxed">
+                <p className="text-xs text-slate-500 font-sans leading-relaxed">
                   {post.excerpt}
                 </p>
               </div>
 
-              <div className="flex items-center justify-between pt-6 border-t border-cream-100 mt-6 text-xs text-cream-500">
+              <div className="flex items-center justify-between pt-6 border-t border-white/5 mt-6 text-xs text-slate-500">
                 <div className="flex items-center space-x-2">
-                  <div className="w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center font-bold text-[10px] text-brand-800">
+                  <div className="w-6 h-6 rounded-full bg-brand-500/20 flex items-center justify-center font-bold text-[10px] text-brand-400">
                     {post.author.split(' ').map(n => n[0]).join('')}
                   </div>
                   <span>{post.author}</span>
                 </div>
-                <span className="flex items-center space-x-1 font-bold text-brand-600 group-hover:underline">
+                <span className="flex items-center space-x-1 font-bold text-brand-500 group-hover:underline">
                   <span>Read Post</span>
                   <ChevronRight className="h-3.5 w-3.5" />
                 </span>
@@ -131,17 +131,17 @@ export default function Blog() {
 
       {/* ARTICLE READER MODAL OVERLAY */}
       {selectedPost && (
-        <div className="fixed inset-0 bg-cream-950/45 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl w-full max-w-2xl max-h-[85vh] overflow-y-auto shadow-2xl border border-cream-200">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="glass-panel rounded-3xl w-full max-w-2xl max-h-[85vh] overflow-y-auto shadow-2xl border border-white/10">
             
             {/* Modal Header */}
-            <div className="p-6 md:p-8 border-b border-cream-100 flex items-start justify-between">
+            <div className="p-6 md:p-8 border-b border-white/5 flex items-start justify-between">
               <div className="space-y-2">
-                <span className="bg-brand-50 text-brand-700 px-2.5 py-1 rounded-full text-[10px] font-bold font-mono">
+                <span className="bg-brand-500/10 text-brand-400 px-2.5 py-1 rounded-full text-[10px] font-bold font-mono">
                   {selectedPost.category}
                 </span>
-                <h3 className="text-xl md:text-2xl font-bold font-display text-cream-900">{selectedPost.title}</h3>
-                <div className="flex items-center space-x-4 text-xs text-cream-400 font-mono">
+                <h3 className="text-xl md:text-2xl font-bold font-display text-white">{selectedPost.title}</h3>
+                <div className="flex items-center space-x-4 text-xs text-slate-600 font-mono">
                   <span>{selectedPost.date}</span>
                   <span>•</span>
                   <span>{selectedPost.readTime}</span>
@@ -149,14 +149,14 @@ export default function Blog() {
               </div>
               <button 
                 onClick={() => setSelectedPost(null)}
-                className="p-2 hover:bg-cream-100 rounded-full text-cream-400 hover:text-cream-600 transition-all"
+                className="p-2 hover:bg-white/5 rounded-full text-slate-600 hover:text-slate-400 transition-all"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
             {/* Modal Body */}
-            <div className="p-6 md:p-8 space-y-4 font-sans text-xs md:text-sm text-cream-600 leading-relaxed">
+            <div className="p-6 md:p-8 space-y-4 font-sans text-xs md:text-sm text-slate-400 leading-relaxed">
               {blogContents[selectedPost.id]?.map((paragraph, pIdx) => (
                 <p key={pIdx}>{paragraph}</p>
               )) || (
@@ -165,13 +165,13 @@ export default function Blog() {
             </div>
 
             {/* Modal Footer */}
-            <div className="bg-cream-50 p-6 border-t border-cream-100 flex items-center justify-between text-xs text-cream-500">
+            <div className="bg-slate-950 p-6 border-t border-white/5 flex items-center justify-between text-xs text-slate-500">
               <div className="flex items-center space-x-2">
-                <span className="font-bold text-cream-800">Written by {selectedPost.author}</span>
+                <span className="font-bold text-slate-200">Written by {selectedPost.author}</span>
               </div>
               <button 
                 onClick={() => setSelectedPost(null)}
-                className="px-4 py-2 bg-cream-900 hover:bg-cream-800 text-white rounded-xl font-bold"
+                className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold"
               >
                 Close Article
               </button>

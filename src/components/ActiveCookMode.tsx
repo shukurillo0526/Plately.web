@@ -466,7 +466,7 @@ export default function ActiveCookMode({ isEmbedded = false, onClose }: ActiveCo
                     onClick={() => setBeginnerMode(!beginnerMode)}
                     className={`w-11 h-6 rounded-full p-0.5 transition-all duration-200 ${beginnerMode ? 'bg-[#e67e00]' : 'bg-slate-800 border border-slate-700'}`}
                   >
-                    <div className={`w-5 h-5 rounded-full bg-white transition-all duration-200 ${beginnerMode ? 'translate-x-5' : 'translate-x-0'}`} />
+                    <div className={`w-5 h-5 rounded-full glass-panel transition-all duration-200 ${beginnerMode ? 'translate-x-5' : 'translate-x-0'}`} />
                   </button>
                 </div>
 

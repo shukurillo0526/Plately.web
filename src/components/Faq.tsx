@@ -78,19 +78,19 @@ export default function Faq() {
       
       {/* HEADER */}
       <section className="text-center pt-12 max-w-4xl mx-auto px-4">
-        <span className="text-xs font-bold text-cream-500 bg-cream-100 border border-cream-200 px-3 py-1 rounded-full uppercase tracking-wider">
+        <span className="text-xs font-bold text-slate-500 bg-white/5 border border-white/10 px-3 py-1 rounded-full uppercase tracking-wider">
           Support Center
         </span>
-        <h1 className="text-4xl md:text-5xl font-extrabold font-display text-cream-900 mt-4 tracking-tight leading-tight">
+        <h1 className="text-4xl md:text-5xl font-extrabold font-display text-white mt-4 tracking-tight leading-tight">
           Frequently Asked Questions.
         </h1>
-        <p className="text-sm md:text-base text-cream-600 font-sans mt-4 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-sm md:text-base text-slate-400 font-sans mt-4 max-w-2xl mx-auto leading-relaxed">
           Need help understanding OCR receipt matching, offline synchronizations, or ecosystem commissions? Explore our categories or search with keyword terms.
         </p>
 
         {/* Search Bar */}
         <div className="relative max-w-md mx-auto mt-8">
-          <Search className="absolute left-4 top-3.5 h-4 w-4 text-cream-400" />
+          <Search className="absolute left-4 top-3.5 h-4 w-4 text-slate-600" />
           <input 
             type="text" 
             placeholder="Search questions (e.g. 'OCR', 'free' ...)" 
@@ -99,7 +99,7 @@ export default function Faq() {
               setSearchQuery(e.target.value);
               setExpandedIndex(null);
             }}
-            className="w-full pl-11 pr-4 py-3 bg-white border border-cream-200 rounded-xl text-xs text-cream-800 placeholder-cream-400 focus:outline-none focus:ring-1 focus:ring-brand-500 shadow-sm"
+            className="w-full pl-11 pr-4 py-3 glass-panel border border-white/10 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 shadow-sm"
           />
         </div>
       </section>
@@ -108,7 +108,7 @@ export default function Faq() {
       <section className="max-w-4xl mx-auto px-4">
         
         {/* Category Tabs */}
-        <div className="flex justify-center space-x-2 border-b border-cream-200 pb-3 mb-8">
+        <div className="flex justify-center space-x-2 border-b border-white/10 pb-3 mb-8">
           {(['General', 'Pantry', 'Recipes', 'Ecosystem'] as const).map(cat => (
             <button
               key={cat}
@@ -116,7 +116,7 @@ export default function Faq() {
                 setActiveCategory(cat);
                 setExpandedIndex(null);
               }}
-              className={`px-4 py-2 text-xs font-bold rounded-lg transition-all ${activeCategory === cat ? 'bg-cream-900 text-white shadow-sm' : 'text-cream-500 hover:text-cream-800'}`}
+              className={`px-4 py-2 text-xs font-bold rounded-lg transition-all ${activeCategory === cat ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-500 hover:text-slate-200'}`}
             >
               {cat === 'Pantry' ? '🧺 Shelf & Scanning' :
                cat === 'Recipes' ? '🍳 Cook & Diet' :
@@ -129,8 +129,8 @@ export default function Faq() {
         {/* Accordions */}
         <div className="space-y-3 min-h-[250px]">
           {filteredFaqs.length === 0 ? (
-            <div className="text-center py-12 text-cream-500 space-y-2">
-              <HelpCircle className="h-8 w-8 mx-auto text-cream-300" />
+            <div className="text-center py-12 text-slate-500 space-y-2">
+              <HelpCircle className="h-8 w-8 mx-auto text-slate-400" />
               <p className="text-xs font-sans">No questions matched your active search queries.</p>
             </div>
           ) : (
@@ -139,18 +139,18 @@ export default function Faq() {
               return (
                 <div 
                   key={idx}
-                  className="bg-white rounded-xl border border-cream-200 shadow-sm overflow-hidden"
+                  className="glass-panel rounded-xl border border-white/10 shadow-sm overflow-hidden"
                 >
                   <button 
                     onClick={() => toggleAccordion(idx)}
-                    className="w-full p-5 text-left flex items-center justify-between font-display text-xs md:text-sm font-bold text-cream-900 hover:bg-cream-50 transition-all"
+                    className="w-full p-5 text-left flex items-center justify-between font-display text-xs md:text-sm font-bold text-white hover:bg-slate-950 transition-all"
                   >
                     <span>{faq.question}</span>
-                    {isExpanded ? <ChevronUp className="h-4 w-4 text-cream-500" /> : <ChevronDown className="h-4 w-4 text-cream-500" />}
+                    {isExpanded ? <ChevronUp className="h-4 w-4 text-slate-500" /> : <ChevronDown className="h-4 w-4 text-slate-500" />}
                   </button>
 
                   {isExpanded && (
-                    <div className="px-5 pb-5 pt-1 text-xs text-cream-600 leading-relaxed font-sans border-t border-cream-100 animate-fadeIn">
+                    <div className="px-5 pb-5 pt-1 text-xs text-slate-400 leading-relaxed font-sans border-t border-white/5 animate-fadeIn">
                       {faq.answer}
                     </div>
                   )}
@@ -165,48 +165,48 @@ export default function Faq() {
       {/* SUPPORT FOOTER MESSAGE */}
       <section className="max-w-3xl mx-auto px-4 text-center space-y-8 pb-12">
         <div className="space-y-2">
-          <MessageSquare className="h-8 w-8 text-brand-600 mx-auto" />
-          <h4 className="text-xl font-bold font-display text-cream-900">Get in Touch</h4>
-          <p className="text-sm text-cream-600 max-w-md mx-auto">
+          <MessageSquare className="h-8 w-8 text-brand-500 mx-auto" />
+          <h4 className="text-xl font-bold font-display text-white">Get in Touch</h4>
+          <p className="text-sm text-slate-400 max-w-md mx-auto">
             Whether you have technical feedback, investment inquiries, or need kitchen onboarding support, our channels are fully open.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
           {/* Card 1: Official Support */}
-          <div className="p-5 rounded-2xl bg-cream-50 border border-cream-200/60 hover:border-brand-500/30 transition-all flex flex-col justify-between space-y-3">
+          <div className="p-5 rounded-2xl bg-slate-950 border border-white/10/60 hover:border-brand-500/30 transition-all flex flex-col justify-between space-y-3">
             <div>
-              <span className="text-[10px] font-mono text-brand-700 uppercase tracking-wider font-semibold">General Support</span>
-              <h5 className="font-bold font-display text-cream-900 text-sm mt-1">Customer & App Help</h5>
-              <p className="text-[11px] text-cream-500 mt-1">For general inquiries, account assistance, or app setup help.</p>
+              <span className="text-[10px] font-mono text-brand-400 uppercase tracking-wider font-semibold">General Support</span>
+              <h5 className="font-bold font-display text-white text-sm mt-1">Customer & App Help</h5>
+              <p className="text-[11px] text-slate-500 mt-1">For general inquiries, account assistance, or app setup help.</p>
             </div>
-            <a href="mailto:theplately@gmail.com" className="text-xs font-bold text-brand-600 hover:text-brand-700 transition-colors inline-flex items-center space-x-1 mt-2">
+            <a href="mailto:theplately@gmail.com" className="text-xs font-bold text-brand-500 hover:text-brand-400 transition-colors inline-flex items-center space-x-1 mt-2">
               <span>theplately@gmail.com</span>
               <span>→</span>
             </a>
           </div>
 
           {/* Card 2: Personal Hotline */}
-          <div className="p-5 rounded-2xl bg-cream-50 border border-cream-200/60 hover:border-brand-500/30 transition-all flex flex-col justify-between space-y-3">
+          <div className="p-5 rounded-2xl bg-slate-950 border border-white/10/60 hover:border-brand-500/30 transition-all flex flex-col justify-between space-y-3">
             <div>
-              <span className="text-[10px] font-mono text-brand-700 uppercase tracking-wider font-semibold">Direct Line</span>
-              <h5 className="font-bold font-display text-cream-900 text-sm mt-1">Founder's Phone</h5>
-              <p className="text-[11px] text-cream-500 mt-1">Urgent matters, media inquiries, or technical priority queries.</p>
+              <span className="text-[10px] font-mono text-brand-400 uppercase tracking-wider font-semibold">Direct Line</span>
+              <h5 className="font-bold font-display text-white text-sm mt-1">Founder's Phone</h5>
+              <p className="text-[11px] text-slate-500 mt-1">Urgent matters, media inquiries, or technical priority queries.</p>
             </div>
-            <a href="tel:+998903850526" className="text-xs font-bold text-brand-600 hover:text-brand-700 transition-colors inline-flex items-center space-x-1 mt-2">
+            <a href="tel:+998903850526" className="text-xs font-bold text-brand-500 hover:text-brand-400 transition-colors inline-flex items-center space-x-1 mt-2">
               <span>+998 90 385 0526</span>
               <span>→</span>
             </a>
           </div>
 
           {/* Card 3: Founder's Desk */}
-          <div className="p-5 rounded-2xl bg-cream-50 border border-cream-200/60 hover:border-brand-500/30 transition-all flex flex-col justify-between space-y-3">
+          <div className="p-5 rounded-2xl bg-slate-950 border border-white/10/60 hover:border-brand-500/30 transition-all flex flex-col justify-between space-y-3">
             <div>
-              <span className="text-[10px] font-mono text-brand-700 uppercase tracking-wider font-semibold">Partnerships</span>
-              <h5 className="font-bold font-display text-cream-900 text-sm mt-1">Founder's Email</h5>
-              <p className="text-[11px] text-cream-500 mt-1">Reach out directly to Shukurillo Mamarasulov for strategic ties.</p>
+              <span className="text-[10px] font-mono text-brand-400 uppercase tracking-wider font-semibold">Partnerships</span>
+              <h5 className="font-bold font-display text-white text-sm mt-1">Founder's Email</h5>
+              <p className="text-[11px] text-slate-500 mt-1">Reach out directly to Shukurillo Mamarasulov for strategic ties.</p>
             </div>
-            <a href="mailto:shukurillomamarasulovex@gmail.com" className="text-xs font-bold text-brand-600 hover:text-brand-700 transition-colors inline-flex items-center space-x-1 mt-2">
+            <a href="mailto:shukurillomamarasulovex@gmail.com" className="text-xs font-bold text-brand-500 hover:text-brand-400 transition-colors inline-flex items-center space-x-1 mt-2">
               <span className="truncate">shukurillomamarasulovex@gmail.com</span>
             </a>
           </div>

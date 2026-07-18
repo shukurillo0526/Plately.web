@@ -42,9 +42,13 @@ interface HomeProps {
 }
 
 export default function Home({ onNavigate, onOpenBetaModal }: HomeProps) {
-  // Interactive Simulator State (matching the 4 screenshots)
-  const [mockTab, setMockTab] = useState<'cook' | 'scan' | 'shelf' | 'profile' | 'active_cook'>('cook');
-  const [prevTab, setPrevTab] = useState<'cook' | 'scan' | 'shelf'>('cook');
+  // Interactive Simulator State (matching all core screens including Prep & Calorie Scan)
+  const [mockTab, setMockTab] = useState<'cook' | 'scan' | 'shelf' | 'prep' | 'profile' | 'active_cook'>('cook');
+  const [prevTab, setPrevTab] = useState<'cook' | 'scan' | 'shelf' | 'prep'>('cook');
+  const [scanSubTab, setScanSubTab] = useState<'food' | 'calories'>('food');
+  const [prepDays, setPrepDays] = useState<number>(5);
+  const [prepRunning, setPrepRunning] = useState<boolean>(false);
+  const [prepStepCheck, setPrepStepCheck] = useState<boolean[]>([false, false, false]);
   const [userXP, setUserXP] = useState<number>(2385);
   const [mealsCooked, setMealsCooked] = useState<number>(18);
   const [itemsSaved, setItemsSaved] = useState<number>(297);
@@ -145,54 +149,54 @@ export default function Home({ onNavigate, onOpenBetaModal }: HomeProps) {
           
           {/* Hero Left Column */}
           <div className="lg:col-span-5 space-y-8 text-center lg:text-left">
-            <div className="inline-flex items-center space-x-2 bg-brand-50 border border-brand-200 rounded-full px-4 py-1.5 text-xs font-semibold text-brand-800">
+            <div className="inline-flex items-center space-x-2 bg-brand-500/10 border border-brand-500/30 rounded-full px-4 py-1.5 text-xs font-semibold text-brand-400">
               <Sparkles className="h-3.5 w-3.5 text-brand-500 animate-pulse" />
               <span>Plately Beta v1.2 — Live Web Experience</span>
             </div>
             
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold font-display leading-tight tracking-tight text-cream-900">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold font-display leading-tight tracking-tight text-white">
               Your entire kitchen, <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-emerald-600">
                 finally in one app.
               </span>
             </h1>
             
-            <p className="text-lg text-cream-600 font-sans max-w-xl mx-auto lg:mx-0 leading-relaxed">
+            <p className="text-lg text-slate-400 font-sans max-w-xl mx-auto lg:mx-0 leading-relaxed">
               Plately tracks what’s in your fridge, recommends smart recipes, logs what you eat, and schedules your meal prep—reducing waste, saving money, and optimizing nutrition.
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-              <button 
+              <a 
                 id="hero-primary-cta"
-                onClick={onOpenBetaModal}
-                className="w-full sm:w-auto px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl shadow-lg shadow-brand-200/50 hover:shadow-brand-300/50 transition-all flex items-center justify-center space-x-2 group"
+                href="https://app.theplately.com"
+                className="w-full sm:w-auto px-8 py-4 bg-brand-500 hover:bg-brand-400 text-white font-semibold rounded-xl shadow-[0_0_15px_rgba(249,139,37,0.4)] hover:shadow-[0_0_25px_rgba(249,139,37,0.6)] transition-all flex items-center justify-center space-x-2 group"
               >
-                <span>Join the Beta Program</span>
+                <span>Open Web App</span>
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </button>
+              </a>
               
               <button 
                 id="hero-secondary-cta"
                 onClick={() => onNavigate('features')}
-                className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-cream-100 border border-cream-300 hover:border-cream-400 text-cream-700 font-semibold rounded-xl transition-all flex items-center justify-center space-x-2"
+                className="w-full sm:w-auto px-8 py-4 glass-panel hover:glass-panel-hover text-slate-300 font-semibold rounded-xl transition-all flex items-center justify-center space-x-2"
               >
                 <span>Explore Features</span>
               </button>
             </div>
 
             {/* Micro proof banner */}
-            <div className="pt-4 border-t border-cream-200 grid grid-cols-3 gap-4 text-center lg:text-left">
+            <div className="pt-4 border-t border-white/10 grid grid-cols-3 gap-4 text-center lg:text-left">
               <div>
-                <p className="text-2xl font-bold font-display text-brand-600">25%</p>
-                <p className="text-xs text-cream-500 font-sans">Avg. Grocery Savings</p>
+                <p className="text-2xl font-bold font-display text-brand-500">25%</p>
+                <p className="text-xs text-slate-500 font-sans">Avg. Grocery Savings</p>
               </div>
               <div>
-                <p className="text-2xl font-bold font-display text-brand-600">98%</p>
-                <p className="text-xs text-cream-500 font-sans">Beta Tester Satisfaction</p>
+                <p className="text-2xl font-bold font-display text-brand-500">98%</p>
+                <p className="text-xs text-slate-500 font-sans">Beta Tester Satisfaction</p>
               </div>
               <div>
-                <p className="text-2xl font-bold font-display text-brand-600">12t</p>
-                <p className="text-xs text-cream-500 font-sans">Food Waste Prevented</p>
+                <p className="text-2xl font-bold font-display text-brand-500">12t</p>
+                <p className="text-xs text-slate-500 font-sans">Food Waste Prevented</p>
               </div>
             </div>
           </div>
@@ -422,72 +426,131 @@ export default function Home({ onNavigate, onOpenBetaModal }: HomeProps) {
 
                       {/* Sub-tabs */}
                       <div className="flex justify-center border-b border-slate-800/60 text-xs font-semibold">
-                        <button className="text-[#e07a11] border-b-2 border-[#e07a11] pb-2 px-6">
+                        <button 
+                          onClick={() => setScanSubTab('food')}
+                          className={`pb-2 px-6 transition-all ${scanSubTab === 'food' ? 'text-[#e07a11] border-b-2 border-[#e07a11]' : 'text-slate-400 hover:text-slate-200'}`}
+                        >
                           Scan Food
                         </button>
-                        <button className="text-slate-400 hover:text-slate-200 pb-2 px-6">
+                        <button 
+                          onClick={() => setScanSubTab('calories')}
+                          className={`pb-2 px-6 transition-all ${scanSubTab === 'calories' ? 'text-[#e07a11] border-b-2 border-[#e07a11]' : 'text-slate-400 hover:text-slate-200'}`}
+                        >
                           Scan Calories
                         </button>
                       </div>
 
-                      {/* Camera viewfinder section */}
-                      <div className="flex-1 flex flex-col items-center justify-center space-y-6 relative py-4">
-                        
-                        {/* Target Orange Viewfinder icon (Screenshot 2) */}
-                        <div className="relative w-40 h-40 flex items-center justify-center">
-                          {/* Outer scanning orange glowing effect */}
-                          <div className="absolute inset-0 bg-amber-500/10 rounded-full blur-xl animate-pulse" />
-                          
-                          {/* Custom scanner frame */}
-                          <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-[#e07a11] rounded-tl-lg" />
-                          <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-[#e07a11] rounded-tr-lg" />
-                          <div className="absolute bottom-0 left-0 w-8 h-8 border-t-4 border-l-4 border-[#e07a11] rounded-bl-lg rotate-180" />
-                          <div className="absolute bottom-0 right-0 w-8 h-8 border-t-4 border-r-4 border-[#e07a11] rounded-br-lg rotate-180" />
-                          
-                          <Barcode className="w-16 h-16 text-[#e07a11] opacity-90" />
+                      {scanSubTab === 'calories' ? (
+                        /* Calorie Plate Scanner Simulation (CalorieScanTab) */
+                        <div className="flex-1 flex flex-col justify-between space-y-3 py-2 animate-fadeIn">
+                          <div className="relative h-44 bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden flex flex-col items-center justify-center p-3 text-center">
+                            <img 
+                              src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&auto=format&fit=crop&q=80" 
+                              alt="Garlic Chicken Rice Bowl" 
+                              className="absolute inset-0 w-full h-full object-cover opacity-35"
+                              referrerPolicy="no-referrer"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent" />
+                            
+                            <div className="relative z-10 space-y-2">
+                              <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-[10px] font-bold px-2.5 py-0.5 rounded-full font-mono">
+                                ✦ AI Plate Recognition Active
+                              </span>
+                              <h5 className="text-sm font-bold text-white leading-tight">Garlic Chicken & Brown Rice</h5>
+                              <p className="text-[11px] text-amber-400 font-mono font-semibold">
+                                520 kcal • 38g Protein • 45g Carbs
+                              </p>
+                            </div>
+
+                            {/* Sweeping scan bar */}
+                            <motion.div 
+                              initial={{ top: '15%' }}
+                              animate={{ top: '85%' }}
+                              transition={{ duration: 1.5, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' }}
+                              className="absolute left-3 right-3 h-0.5 bg-[#e07a11] shadow-[0_0_12px_#e07a11] pointer-events-none"
+                            />
+                          </div>
+
+                          <div className="bg-[#141b25] border border-slate-800/80 p-3 rounded-2xl space-y-1.5 text-left text-[11px]">
+                            <div className="flex justify-between text-slate-300 font-semibold">
+                              <span>Estimated Portion Size:</span>
+                              <span className="text-[#e07a11]">1 Standard Bowl (420g)</span>
+                            </div>
+                            <div className="flex justify-between text-slate-400 text-[10px]">
+                              <span>Vitamins & Minerals:</span>
+                              <span className="text-emerald-400 font-medium">High Iron & Vitamin B6</span>
+                            </div>
+                          </div>
+
+                          <button 
+                            onClick={() => {
+                              triggerXPGain(40);
+                              setMealsCooked(prev => prev + 1);
+                              setScanSubTab('food');
+                              setMockTab('profile');
+                            }}
+                            className="w-full py-3 bg-gradient-to-r from-[#e07a11] to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-xs rounded-xl shadow-lg shadow-amber-900/20 transition-all flex items-center justify-center space-x-1.5"
+                          >
+                            <Check className="w-4 h-4" />
+                            <span>Consume & Log Plate (+40 XP)</span>
+                          </button>
                         </div>
+                      ) : (
+                        /* Standard Food Scan (Receipt / Photo / Barcode) */
+                        <>
+                          {/* Camera viewfinder section */}
+                          <div className="flex-1 flex flex-col items-center justify-center space-y-6 relative py-4">
+                            <div className="relative w-40 h-40 flex items-center justify-center">
+                              <div className="absolute inset-0 bg-amber-500/10 rounded-full blur-xl animate-pulse" />
+                              <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-[#e07a11] rounded-tl-lg" />
+                              <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-[#e07a11] rounded-tr-lg" />
+                              <div className="absolute bottom-0 left-0 w-8 h-8 border-t-4 border-l-4 border-[#e07a11] rounded-bl-lg rotate-180" />
+                              <div className="absolute bottom-0 right-0 w-8 h-8 border-t-4 border-r-4 border-[#e07a11] rounded-br-lg rotate-180" />
+                              <Barcode className="w-16 h-16 text-[#e07a11] opacity-90" />
+                            </div>
 
-                        {/* Scanner description words */}
-                        <div className="text-center space-y-1 px-4">
-                          <h4 className="text-lg font-bold text-white">Scan Your Ingredients</h4>
-                          <p className="text-xs text-slate-400 font-sans leading-normal">
-                            Take a photo of food items to add them to your shelf automatically
-                          </p>
-                        </div>
-                      </div>
+                            <div className="text-center space-y-1 px-4">
+                              <h4 className="text-lg font-bold text-white">Scan Your Ingredients</h4>
+                              <p className="text-xs text-slate-400 font-sans leading-normal">
+                                Take a photo of food items or grocery slips to add them automatically
+                              </p>
+                            </div>
+                          </div>
 
-                      {/* Input Mode Selector Bar */}
-                      <div className="bg-slate-900/80 border border-slate-800 p-1 rounded-xl grid grid-cols-3 gap-1 text-[11px] font-semibold text-slate-400 text-center">
-                        <button className="bg-[#4a2e16]/60 border border-[#e07a11]/35 text-white py-2 rounded-lg flex items-center justify-center space-x-1.5">
-                          <span className="text-xs">🧾</span>
-                          <span>Receipt</span>
-                        </button>
-                        <button className="hover:text-slate-200 py-2 flex items-center justify-center space-x-1.5 transition-all">
-                          <Camera className="w-3.5 h-3.5 text-slate-400" />
-                          <span>Photo</span>
-                        </button>
-                        <button className="hover:text-slate-200 py-2 flex items-center justify-center space-x-1.5 transition-all">
-                          <span className="text-xs">📱</span>
-                          <span>Barcode</span>
-                        </button>
-                      </div>
+                          {/* Input Mode Selector Bar */}
+                          <div className="bg-slate-900/80 border border-slate-800 p-1 rounded-xl grid grid-cols-3 gap-1 text-[11px] font-semibold text-slate-400 text-center">
+                            <button className="bg-[#4a2e16]/60 border border-[#e07a11]/35 text-white py-2 rounded-lg flex items-center justify-center space-x-1.5">
+                              <span className="text-xs">🧾</span>
+                              <span>Receipt</span>
+                            </button>
+                            <button className="hover:text-slate-200 py-2 flex items-center justify-center space-x-1.5 transition-all">
+                              <Camera className="w-3.5 h-3.5 text-slate-400" />
+                              <span>Photo</span>
+                            </button>
+                            <button className="hover:text-slate-200 py-2 flex items-center justify-center space-x-1.5 transition-all">
+                              <span className="text-xs">📱</span>
+                              <span>Barcode</span>
+                            </button>
+                          </div>
 
-                      {/* Primary Camera trigger buttons */}
-                      <div className="space-y-2 pt-2">
-                        <button 
-                          onClick={startOcrScan}
-                          disabled={ocrScanning}
-                          className="w-full py-3 bg-[#e07a11] hover:bg-amber-600 disabled:opacity-75 text-white font-bold text-xs rounded-xl flex items-center justify-center space-x-2 shadow-lg shadow-amber-900/10 transition-all"
-                        >
-                          <Camera className="w-4 h-4" />
-                          <span>{ocrScanning ? 'Scanning Receipt...' : 'Take Photo'}</span>
-                        </button>
+                          {/* Primary Camera trigger buttons */}
+                          <div className="space-y-2 pt-2">
+                            <button 
+                              onClick={startOcrScan}
+                              disabled={ocrScanning}
+                              className="w-full py-3 bg-[#e07a11] hover:bg-amber-600 disabled:opacity-75 text-white font-bold text-xs rounded-xl flex items-center justify-center space-x-2 shadow-lg shadow-amber-900/10 transition-all"
+                            >
+                              <Camera className="w-4 h-4" />
+                              <span>{ocrScanning ? 'Scanning Receipt...' : 'Take Photo'}</span>
+                            </button>
 
-                        <button className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-slate-300 font-semibold text-xs rounded-xl border border-slate-800 transition-all flex items-center justify-center space-x-2">
-                          <Image className="w-4 h-4 text-slate-400" />
-                          <span>Choose from Gallery</span>
-                        </button>
-                      </div>
+                            <button className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-slate-300 font-semibold text-xs rounded-xl border border-slate-800 transition-all flex items-center justify-center space-x-2">
+                              <Image className="w-4 h-4 text-slate-400" />
+                              <span>Choose from Gallery</span>
+                            </button>
+                          </div>
+                        </>
+                      )}
                     </motion.div>
                   )}
 
@@ -720,6 +783,121 @@ export default function Home({ onNavigate, onOpenBetaModal }: HomeProps) {
                     </motion.div>
                   )}
 
+                  {/* 4.5 PREP SCREEN (AI Batch Meal Prep Generator & Session) */}
+                  {mockTab === 'prep' && (
+                    <motion.div
+                      key="prep"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="flex-1 flex flex-col p-5 space-y-4"
+                    >
+                      {/* Prep Header */}
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-2">
+                          <span className="text-lg">🍱</span>
+                          <span className="text-lg font-bold text-white tracking-tight">AI Bulk Prep</span>
+                        </div>
+                        <button 
+                          onClick={() => {
+                            setPrevTab('prep');
+                            setMockTab('profile');
+                          }}
+                          className="w-8 h-8 rounded-full bg-[#e07a11]/20 border border-[#e07a11]/40 flex items-center justify-center text-[#e07a11]"
+                        >
+                          <User className="w-4 h-4 text-[#e07a11]" />
+                        </button>
+                      </div>
+
+                      {/* Days selector pills */}
+                      <div className="bg-[#141b25] border border-slate-800 p-1.5 rounded-2xl grid grid-cols-3 gap-1.5 text-center text-xs font-semibold">
+                        {[3, 5, 7].map(d => (
+                          <button
+                            key={d}
+                            onClick={() => setPrepDays(d)}
+                            className={`py-2 rounded-xl transition-all ${prepDays === d ? 'bg-[#e07a11] text-white shadow-md' : 'text-slate-400 hover:text-white'}`}
+                          >
+                            {d}-Day Batch Plan
+                          </button>
+                        ))}
+                      </div>
+
+                      {/* Plan summary info */}
+                      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3 shadow-inner">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <h4 className="text-xs font-bold text-white uppercase font-display tracking-wide">
+                              {prepDays}-Day Shared Ingredient Matrix
+                            </h4>
+                            <p className="text-[10px] text-slate-400">
+                              Optimized for 15 prep containers • 2h 15m total time
+                            </p>
+                          </div>
+                          <span className="bg-amber-500/10 text-amber-400 border border-amber-500/30 text-[9px] font-mono px-2 py-0.5 rounded-full">
+                            94% Shelf Synergy
+                          </span>
+                        </div>
+
+                        {/* Consolidated ingredients row */}
+                        <div className="flex flex-wrap gap-1.5 pt-1">
+                          {['🍗 1.2kg Chicken Thigh', '🧄 2 Bulbs Garlic', '🍚 5 Cups Brown Rice', '🥬 2 Bags Spinach', '🥢 Soy Sauce'].map(ing => (
+                            <span key={ing} className="bg-slate-800 text-slate-300 border border-slate-700/60 text-[10px] px-2 py-1 rounded-lg">
+                              {ing}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Interactive Prep Session Timer */}
+                      <div className="bg-[#141b25] border border-slate-800/80 p-4 rounded-2xl space-y-3 flex-1 flex flex-col justify-between">
+                        <div className="space-y-1">
+                          <div className="flex justify-between items-center text-xs">
+                            <span className="font-bold text-slate-200">⏱️ Prep Session Steps</span>
+                            <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded ${prepRunning ? 'bg-amber-500/20 text-amber-400 border border-amber-500/40 animate-pulse' : 'bg-slate-800 text-slate-400'}`}>
+                              {prepRunning ? 'SESSION ACTIVE (01:42:10)' : 'READY TO LAUNCH'}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Checkable prep steps */}
+                        <div className="space-y-2 text-[11px]">
+                          {[
+                            'Step 1: Roast chicken & garlic simultaneously at 400°F (35 min)',
+                            'Step 2: Simmer brown rice with sesame oil broth (25 min)',
+                            'Step 3: Portion into 15 glass boxes & apply QR freshness labels'
+                          ].map((step, idx) => (
+                            <div 
+                              key={idx}
+                              onClick={() => {
+                                const newChecks = [...prepStepCheck];
+                                newChecks[idx] = !newChecks[idx];
+                                setPrepStepCheck(newChecks);
+                                if (!newChecks[idx] === false) triggerXPGain(20);
+                              }}
+                              className={`p-2.5 rounded-xl border flex items-center space-x-2.5 cursor-pointer transition-all ${prepStepCheck[idx] ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-300' : 'bg-slate-900 border-slate-800 text-slate-300 hover:border-slate-700'}`}
+                            >
+                              <div className={`w-4 h-4 rounded border flex items-center justify-center shrink-0 ${prepStepCheck[idx] ? 'bg-emerald-500 border-emerald-400 text-black font-bold' : 'border-slate-600'}`}>
+                                {prepStepCheck[idx] && <Check className="w-3 h-3 stroke-[3]" />}
+                              </div>
+                              <span className={prepStepCheck[idx] ? 'line-through opacity-75' : ''}>{step}</span>
+                            </div>
+                          ))}
+                        </div>
+
+                        <button
+                          onClick={() => {
+                            setPrepRunning(!prepRunning);
+                            if (!prepRunning) triggerXPGain(60);
+                          }}
+                          className="w-full py-3 bg-[#e07a11] hover:bg-amber-600 text-white font-bold text-xs rounded-xl shadow-lg shadow-amber-900/20 transition-all flex items-center justify-center space-x-2"
+                        >
+                          <Clock className="w-4 h-4" />
+                          <span>{prepRunning ? 'Pause Prep Session' : 'Start Prep Timer Mode (+60 XP)'}</span>
+                        </button>
+                      </div>
+                    </motion.div>
+                  )}
+
                   {/* 5. PROFILE SCREEN (Screenshot 4) */}
                   {mockTab === 'profile' && (
                     <motion.div
@@ -732,7 +910,7 @@ export default function Home({ onNavigate, onOpenBetaModal }: HomeProps) {
                       {/* Back button Navigation (Screenshot 4) */}
                       <div className="flex items-center justify-between">
                         <button 
-                          onClick={() => setMockTab(prevTab)}
+                          onClick={() => setMockTab(prevTab as any)}
                           className="w-8 h-8 rounded-full bg-slate-900 hover:bg-slate-800 border border-slate-800/80 flex items-center justify-center text-slate-300 transition-all"
                         >
                           <ArrowLeft className="w-4 h-4" />
@@ -903,15 +1081,13 @@ export default function Home({ onNavigate, onOpenBetaModal }: HomeProps) {
                 <div className="w-32 h-1 bg-slate-700 rounded-full" />
               </div>
 
-              {/* Bottom 3 Navigation tabs bar (Screenshot 1, 2, 3) */}
+              {/* Bottom 4 Navigation tabs bar */}
               {mockTab !== 'active_cook' && (
-                <div className="bg-[#0f141c] border-t border-slate-800/80 px-6 py-2.5 grid grid-cols-3 items-center text-center z-40">
+                <div className="bg-[#0f141c] border-t border-slate-800/80 px-4 py-2 grid grid-cols-4 items-center text-center z-40">
                   
                   {/* Cook Tab link */}
                   <button 
-                    onClick={() => {
-                      setMockTab('cook');
-                    }}
+                    onClick={() => setMockTab('cook')}
                     className={`flex flex-col items-center space-y-1 transition-all ${
                       mockTab === 'cook' ? 'text-[#e07a11] scale-102 font-bold' : 'text-slate-400 hover:text-slate-200'
                     }`}
@@ -921,35 +1097,42 @@ export default function Home({ onNavigate, onOpenBetaModal }: HomeProps) {
                   </button>
 
                   {/* Scan Floating center button */}
-                  <div className="relative -top-3 flex flex-col items-center">
+                  <div className="relative -top-2 flex flex-col items-center">
                     <button 
-                      onClick={() => {
-                        setMockTab('scan');
-                      }}
-                      className={`w-11 h-11 rounded-full flex items-center justify-center text-white transition-all transform hover:scale-105 shadow-md ${
+                      onClick={() => setMockTab('scan')}
+                      className={`w-10 h-10 rounded-full flex items-center justify-center text-white transition-all transform hover:scale-105 shadow-md ${
                         mockTab === 'scan'
                           ? 'bg-[#e07a11] ring-4 ring-[#e07a11]/25 shadow-amber-600/30'
                           : 'bg-slate-800 hover:bg-slate-700'
                       }`}
                     >
-                      <Camera className="w-5 h-5" />
+                      <Camera className="w-4.5 h-4.5" />
                     </button>
-                    <span className={`text-[10px] mt-1 transition-colors ${mockTab === 'scan' ? 'text-[#e07a11] font-bold' : 'text-slate-400'}`}>
+                    <span className={`text-[9px] mt-0.5 transition-colors ${mockTab === 'scan' ? 'text-[#e07a11] font-bold' : 'text-slate-400'}`}>
                       Scan
                     </span>
                   </div>
 
                   {/* Shelf Tab link */}
                   <button 
-                    onClick={() => {
-                      setMockTab('shelf');
-                    }}
+                    onClick={() => setMockTab('shelf')}
                     className={`flex flex-col items-center space-y-1 transition-all ${
                       mockTab === 'shelf' ? 'text-[#e07a11] scale-102 font-bold' : 'text-slate-400 hover:text-slate-200'
                     }`}
                   >
                     <Package className="w-4 h-4" />
                     <span className="text-[10px]">Shelf</span>
+                  </button>
+
+                  {/* Prep Tab link */}
+                  <button 
+                    onClick={() => setMockTab('prep')}
+                    className={`flex flex-col items-center space-y-1 transition-all ${
+                      mockTab === 'prep' ? 'text-[#e07a11] scale-102 font-bold' : 'text-slate-400 hover:text-slate-200'
+                    }`}
+                  >
+                    <BookOpen className="w-4 h-4" />
+                    <span className="text-[10px]">Prep</span>
                   </button>
 
                 </div>
@@ -1010,11 +1193,11 @@ export default function Home({ onNavigate, onOpenBetaModal }: HomeProps) {
 
             {/* Interactive Legend for the Smartphone Frame */}
             <div className="mt-4 flex flex-col space-y-1 text-center max-w-sm">
-              <span className="text-[11px] text-cream-600 font-medium">
+              <span className="text-[11px] text-slate-400 font-medium">
                 ✨ **Interactive Smartphone Playground** ✨
               </span>
-              <span className="text-[10px] text-cream-500 font-mono leading-relaxed">
-                Toggle bottom tabs, click top-right profile button to check impact stats, use Search or Category filter in Shelf, or click Take Photo in Scan tab to add receipt items & boost recipe matches!
+              <span className="text-[10px] text-slate-500 font-mono leading-relaxed">
+                Toggle bottom tabs (Cook, Scan, Shelf, Prep), click top-right profile button to check impact stats, try Calorie Plate Scanner under Scan, or test AI Bulk Prep!
               </span>
             </div>
             
@@ -1023,74 +1206,81 @@ export default function Home({ onNavigate, onOpenBetaModal }: HomeProps) {
         </div>
       </section>
 
-      {/* 2. THE PROBLEM AND INTEGRATED ECOSYSTEM STATEMENT */}
-      <section id="ecosystem-story" className="bg-cream-100/70 border-y border-cream-200/80 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 2. THE PROBLEM AND INTEGRATED ECOSYSTEM STATEMENT (Rich Dark/Glassmorphism Theme) */}
+      <section id="ecosystem-story" className="bg-[#0c1017] border-y border-slate-800/80 py-20 text-white relative overflow-hidden">
+        {/* Ambient background lighting */}
+        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-[#e07a11]/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-3xl mx-auto space-y-4">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-brand-600">The Problem with Kitchen Tech</h2>
-            <p className="text-3xl font-bold font-display text-cream-900">
-              Why do recipes, inventory, and health tracking live in separate apps?
-            </p>
-            <p className="text-cream-600 text-sm leading-relaxed">
-              Every day, home cooks juggle recipe blogs filled with popups, manual food trackers with confusing scales, and sticky notes on the fridge that fail to prevent food from rotting. Plately connects these disconnected islands into a single, cohesive ecosystem.
+            <div className="inline-flex items-center space-x-2 bg-[#e07a11]/15 border border-[#e07a11]/35 px-3.5 py-1.5 rounded-full text-xs font-bold text-[#e07a11]">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>THE PLATELY ECOSYSTEM ENGINE</span>
+            </div>
+            <h2 className="text-3xl md:text-5xl font-black font-display tracking-tight text-white leading-tight">
+              Why do recipes, inventory, and health tracking live in disconnected apps?
+            </h2>
+            <p className="text-slate-400 text-sm md:text-base leading-relaxed max-w-2xl mx-auto">
+              Every day, home cooks juggle recipe blogs filled with popups, manual food trackers with confusing scales, and sticky notes on the fridge that fail to prevent food from rotting. Plately unifies these silos into a single, automated closed-loop kitchen.
             </p>
           </div>
 
-          {/* Integrated Ecosystem Diagram/Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-12">
+          {/* Integrated Ecosystem Cards (Glassmorphism & Rich Aesthetics) */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-16">
             
-            <div className="bg-white p-6 rounded-2xl border border-cream-200 space-y-4 shadow-sm hover:-translate-y-1 transition-all">
-              <div className="w-10 h-10 rounded-lg bg-brand-50 border border-brand-100 flex items-center justify-center text-brand-600">
-                <Camera className="h-5 w-5" />
+            <div className="bg-[#141b25]/90 backdrop-blur-xl p-6 rounded-3xl border border-slate-800 hover:border-[#e07a11]/50 space-y-4 shadow-2xl hover:-translate-y-1.5 transition-all group">
+              <div className="w-12 h-12 rounded-2xl bg-[#e07a11]/15 border border-[#e07a11]/35 flex items-center justify-center text-[#e07a11] group-hover:scale-110 transition-transform">
+                <Camera className="h-6 w-6" />
               </div>
-              <h3 className="text-lg font-bold font-display text-cream-800">1. What You Have</h3>
-              <p className="text-xs text-cream-500 leading-relaxed font-sans">
-                Scan grocery receipts, photograph fresh ingredients, or use barcodes. Plately auto-builds your digital kitchen inventory (Shelf, Freezer, Pantry).
+              <h3 className="text-lg font-bold font-display text-white">1. Multi-Mode Scanner</h3>
+              <p className="text-xs text-slate-400 leading-relaxed font-sans">
+                Scan grocery slips via OCR, photograph fresh produce on your countertop, or point your camera at restaurant plates for instant AI calorie and macro extraction.
               </p>
-              <div className="border-t border-cream-100 pt-3 flex items-center space-x-1 text-xs text-brand-600 font-semibold">
-                <span>Receipt OCR Scanner</span>
+              <div className="border-t border-slate-800/80 pt-3 flex items-center space-x-1 text-xs text-[#e07a11] font-semibold">
+                <span>Receipt OCR & Plate Vision</span>
                 <ChevronRight className="h-3.5 w-3.5" />
               </div>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl border border-cream-200 space-y-4 shadow-sm hover:-translate-y-1 transition-all">
-              <div className="w-10 h-10 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600">
-                <ChefHat className="h-5 w-5" />
+            <div className="bg-[#141b25]/90 backdrop-blur-xl p-6 rounded-3xl border border-slate-800 hover:border-emerald-500/50 space-y-4 shadow-2xl hover:-translate-y-1.5 transition-all group">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 border border-emerald-500/35 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
+                <ChefHat className="h-6 w-6" />
               </div>
-              <h3 className="text-lg font-bold font-display text-cream-800">2. What You Cook</h3>
-              <p className="text-xs text-cream-500 leading-relaxed font-sans">
-                Never ask "what's for dinner" again. Get custom step-by-step recipes generated specifically around ingredients in your fridge nearing expiry.
+              <h3 className="text-lg font-bold font-display text-white">2. Dynamic Shelf Zones</h3>
+              <p className="text-xs text-slate-400 leading-relaxed font-sans">
+                Real-time freshness monitoring categorizes items into <span className="text-red-400 font-medium">Critical</span>, <span className="text-amber-400 font-medium">Urgent</span>, and <span className="text-emerald-400 font-medium">Good</span> zones across your Fridge, Freezer, and Pantry.
               </p>
-              <div className="border-t border-cream-100 pt-3 flex items-center space-x-1 text-xs text-brand-600 font-semibold">
-                <span>AI-Guided Cook Mode</span>
+              <div className="border-t border-slate-800/80 pt-3 flex items-center space-x-1 text-xs text-emerald-400 font-semibold">
+                <span>Automated Expiration Timers</span>
                 <ChevronRight className="h-3.5 w-3.5" />
               </div>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl border border-cream-200 space-y-4 shadow-sm hover:-translate-y-1 transition-all">
-              <div className="w-10 h-10 rounded-lg bg-red-50 border border-red-100 flex items-center justify-center text-red-500">
-                <Flame className="h-5 w-5" />
+            <div className="bg-[#141b25]/90 backdrop-blur-xl p-6 rounded-3xl border border-slate-800 hover:border-amber-500/50 space-y-4 shadow-2xl hover:-translate-y-1.5 transition-all group">
+              <div className="w-12 h-12 rounded-2xl bg-amber-500/15 border border-amber-500/35 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform">
+                <Flame className="h-6 w-6" />
               </div>
-              <h3 className="text-lg font-bold font-display text-cream-800">3. What You Eat</h3>
-              <p className="text-xs text-cream-500 leading-relaxed font-sans">
-                Cooking a Plately recipe automatically logs nutritional macros to your tracker. Photograph restaurant plates to auto-estimate carbs, protein, and calories.
+              <h3 className="text-lg font-bold font-display text-white">3. Cook & Store Leftovers</h3>
+              <p className="text-xs text-slate-400 leading-relaxed font-sans">
+                Our atomic <strong>Servings Cooked vs. Servings Eaten slider</strong> automatically logs nutrition for portions eaten while placing <span className="text-[#e07a11] font-mono">[LEFTOVER]</span> items straight onto your shelf.
               </p>
-              <div className="border-t border-cream-100 pt-3 flex items-center space-x-1 text-xs text-brand-600 font-semibold">
-                <span>Automated Log Engine</span>
+              <div className="border-t border-slate-800/80 pt-3 flex items-center space-x-1 text-xs text-amber-400 font-semibold">
+                <span>Atomic Leftovers Transaction</span>
                 <ChevronRight className="h-3.5 w-3.5" />
               </div>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl border border-cream-200 space-y-4 shadow-sm hover:-translate-y-1 transition-all">
-              <div className="w-10 h-10 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600">
-                <Leaf className="h-5 w-5" />
+            <div className="bg-[#141b25]/90 backdrop-blur-xl p-6 rounded-3xl border border-slate-800 hover:border-blue-500/50 space-y-4 shadow-2xl hover:-translate-y-1.5 transition-all group">
+              <div className="w-12 h-12 rounded-2xl bg-blue-500/15 border border-blue-500/35 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform">
+                <BookOpen className="h-6 w-6" />
               </div>
-              <h3 className="text-lg font-bold font-display text-cream-800">4. What You Save</h3>
-              <p className="text-xs text-cream-500 leading-relaxed font-sans">
-                Get notified before food spoils. Track your household food waste score and measure environmental and financial savings month-over-month.
+              <h3 className="text-lg font-bold font-display text-white">4. AI Bulk Meal Prep</h3>
+              <p className="text-xs text-slate-400 leading-relaxed font-sans">
+                Generate 3, 5, or 7-day batch prep plans that maximize ingredient sharing. Launch an interactive prep timer with sub-steps, container tracking, and freezer alerts.
               </p>
-              <div className="border-t border-cream-100 pt-3 flex items-center space-x-1 text-xs text-brand-600 font-semibold">
-                <span>Food Waste Analytics</span>
+              <div className="border-t border-slate-800/80 pt-3 flex items-center space-x-1 text-xs text-blue-400 font-semibold">
+                <span>Batch Prep Session Timer</span>
                 <ChevronRight className="h-3.5 w-3.5" />
               </div>
             </div>
@@ -1099,88 +1289,88 @@ export default function Home({ onNavigate, onOpenBetaModal }: HomeProps) {
         </div>
       </section>
 
-      {/* 3. KEY BENEFITS SECTION (3-4 Columns) */}
+      {/* 3. KEY BENEFITS SECTION (Rich Dark Mode / Glassmorphism Grid) */}
       <section id="key-benefits" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-          <h2 className="text-sm font-bold text-brand-600 uppercase tracking-widest">Designed for Daily Impact</h2>
-          <p className="text-3xl md:text-4xl font-extrabold font-display text-cream-900">
-            Engineered to change how we live.
+          <h2 className="text-xs font-bold text-[#e07a11] uppercase tracking-widest">Designed for Daily Household Impact</h2>
+          <p className="text-3xl md:text-5xl font-black font-display text-white leading-tight">
+            Engineered to transform how we eat and live.
           </p>
-          <p className="text-cream-600 text-sm">
-            Our technology was designed alongside nutritional scientists and sustainable energy teams to tackle food habits in four key pillars.
+          <p className="text-slate-400 text-sm">
+            Our technology bridges nutritional science with smart home sustainability across four core pillars.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           
-          <div className="space-y-4 bg-white p-6 rounded-2xl border border-cream-100 shadow-sm">
-            <div className="w-12 h-12 rounded-xl bg-brand-50 border border-brand-100 flex items-center justify-center text-brand-600">
+          <div className="space-y-4 bg-slate-900/95 p-7 rounded-3xl border border-slate-800 hover:border-[#e07a11]/40 shadow-xl transition-all text-white group">
+            <div className="w-12 h-12 rounded-2xl bg-[#e07a11]/15 border border-[#e07a11]/35 flex items-center justify-center text-[#e07a11] group-hover:scale-110 transition-transform">
               <Leaf className="h-6 w-6" />
             </div>
-            <h3 className="text-lg font-bold font-display text-cream-900">Stop wasting food</h3>
-            <p className="text-xs text-cream-600 leading-relaxed font-sans">
-              “See what’s in your fridge, get smart expiry alerts, and instantly receive custom recipes tailored specifically to what needs to be used up first.”
+            <h3 className="text-lg font-bold font-display text-white">Stop wasting food</h3>
+            <p className="text-xs text-slate-400 leading-relaxed font-sans">
+              “See exactly what’s in your fridge, get smart expiry push alerts, and instantly receive custom recipes tailored specifically to what needs to be cooked first.”
             </p>
           </div>
 
-          <div className="space-y-4 bg-white p-6 rounded-2xl border border-cream-100 shadow-sm">
-            <div className="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600">
+          <div className="space-y-4 bg-slate-900/95 p-7 rounded-3xl border border-slate-800 hover:border-emerald-500/40 shadow-xl transition-all text-white group">
+            <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 border border-emerald-500/35 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
               <TrendingUp className="h-6 w-6" />
             </div>
-            <h3 className="text-lg font-bold font-display text-cream-900">Eat healthier without effort</h3>
-            <p className="text-xs text-cream-600 leading-relaxed font-sans">
-              “Log what you cook and snap photos of restaurant dishes. Understand exactly what goes into your body without manual spreadsheets.”
+            <h3 className="text-lg font-bold font-display text-white">Zero-click diet logging</h3>
+            <p className="text-xs text-slate-400 leading-relaxed font-sans">
+              “Log what you cook using our Store Leftovers slider, or snap photos of restaurant dishes to get immediate calorie and protein estimates without tedious spreadsheet entry.”
             </p>
           </div>
 
-          <div className="space-y-4 bg-white p-6 rounded-2xl border border-cream-100 shadow-sm">
-            <div className="w-12 h-12 rounded-xl bg-yellow-50 border border-yellow-100 flex items-center justify-center text-yellow-600">
+          <div className="space-y-4 bg-slate-900/95 p-7 rounded-3xl border border-slate-800 hover:border-amber-500/40 shadow-xl transition-all text-white group">
+            <div className="w-12 h-12 rounded-2xl bg-amber-500/15 border border-amber-500/35 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform">
               <Flame className="h-6 w-6" />
             </div>
-            <h3 className="text-lg font-bold font-display text-cream-900">Cook with confidence</h3>
-            <p className="text-xs text-cream-600 leading-relaxed font-sans">
-              “Follow step‑by‑step guided cooking sessions with interactive timers, dynamic cooking adjustments, and AI assistant answers—no blogs, no ads.”
+            <h3 className="text-lg font-bold font-display text-white">Cook with total confidence</h3>
+            <p className="text-xs text-slate-400 leading-relaxed font-sans">
+              “Follow step‑by‑step guided cooking sessions with interactive timers, technique cards, ingredient substitution advice, and AI vocal Q&A answers—no ads or popups.”
             </p>
           </div>
 
-          <div className="space-y-4 bg-white p-6 rounded-2xl border border-cream-100 shadow-sm">
-            <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600">
+          <div className="space-y-4 bg-slate-900/95 p-7 rounded-3xl border border-slate-800 hover:border-blue-500/40 shadow-xl transition-all text-white group">
+            <div className="w-12 h-12 rounded-2xl bg-blue-500/15 border border-blue-500/35 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform">
               <Calendar className="h-6 w-6" />
             </div>
-            <h3 className="text-lg font-bold font-display text-cream-900">Prep once, eat all week</h3>
-            <p className="text-xs text-cream-600 leading-relaxed font-sans">
-              “Plan and execute high-yield batch cooking sessions. Auto-portion boxes, track freezer life, and receive alerts before prep meals dry out.”
+            <h3 className="text-lg font-bold font-display text-white">Prep once, eat all week</h3>
+            <p className="text-xs text-slate-400 leading-relaxed font-sans">
+              “Plan high-yield batch cooking sessions. Auto-portion boxes, track freezer life, and receive alerts before prep meals dry out or spoil.”
             </p>
           </div>
 
         </div>
       </section>
 
-      {/* 4. INTERACTIVE SAVINGS CALCULATOR */}
+      {/* 4. INTERACTIVE SAVINGS CALCULATOR (Dark Mode High Contrast) */}
       <section id="savings-calculator" className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-br from-cream-900 to-cream-950 rounded-3xl text-white p-8 md:p-12 shadow-2xl relative overflow-hidden">
+        <div className="bg-[#0f141c] border border-slate-800 rounded-[36px] text-white p-8 md:p-12 shadow-2xl relative overflow-hidden ring-1 ring-slate-800/80">
           {/* Subtle background glows */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-brand-500/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-0 right-0 w-80 h-80 bg-[#e07a11]/15 rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-emerald-500/15 rounded-full blur-[100px] pointer-events-none" />
 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center relative z-10">
             
             <div className="md:col-span-6 space-y-6">
-              <div className="inline-flex items-center space-x-2 bg-cream-800 border border-cream-700 rounded-full px-3 py-1 text-xs text-brand-400">
+              <div className="inline-flex items-center space-x-2 bg-slate-900 border border-slate-800 rounded-full px-3.5 py-1.5 text-xs font-bold text-[#e07a11]">
                 <Calculator className="h-3.5 w-3.5" />
-                <span>Interactive Waste Calculator</span>
+                <span>Interactive Waste & Cash Calculator</span>
               </div>
-              <h2 className="text-3xl font-bold font-display tracking-tight leading-none">
+              <h2 className="text-3xl sm:text-4xl font-black font-display tracking-tight leading-none text-white">
                 Measure your impact. <br />See what you save.
               </h2>
-              <p className="text-cream-300 text-xs leading-relaxed font-sans">
-                The UN Food Programme reports families throw away over 25% of all grocery purchases. Plately's automated shelf scanner prevents waste before it costs you.
+              <p className="text-slate-400 text-xs leading-relaxed font-sans">
+                The UN Food Programme reports families throw away over 25% of all grocery purchases. Plately's automated shelf scanner and Use-It-Up cook assistant prevent waste before it costs you.
               </p>
 
               {/* Slider Inputs */}
-              <div className="space-y-4 pt-4 border-t border-cream-800">
-                <div className="space-y-1.5">
-                  <div className="flex justify-between text-xs font-mono text-cream-400">
+              <div className="space-y-5 pt-4 border-t border-slate-800">
+                <div className="space-y-2">
+                  <div className="flex justify-between text-xs font-mono text-slate-400">
                     <span>HOUSEHOLD SIZE</span>
                     <span className="text-white font-bold">{householdSize} {householdSize === 5 ? '5+ people' : householdSize === 1 ? 'Person' : 'People'}</span>
                   </div>
@@ -1190,14 +1380,14 @@ export default function Home({ onNavigate, onOpenBetaModal }: HomeProps) {
                     max="5" 
                     value={householdSize} 
                     onChange={(e) => setHouseholdSize(Number(e.target.value))}
-                    className="w-full accent-brand-500 bg-cream-800 h-2 rounded-lg appearance-none cursor-pointer"
+                    className="w-full accent-[#e07a11] bg-slate-800 h-2 rounded-lg appearance-none cursor-pointer"
                   />
                 </div>
 
-                <div className="space-y-1.5">
-                  <div className="flex justify-between text-xs font-mono text-cream-400">
+                <div className="space-y-2">
+                  <div className="flex justify-between text-xs font-mono text-slate-400">
                     <span>ESTIMATED MONTHLY GROCERY BILL</span>
-                    <span className="text-white font-bold">${monthlyGroceryBill}</span>
+                    <span className="text-white font-bold font-mono">${monthlyGroceryBill} / mo</span>
                   </div>
                   <input 
                     type="range" 
@@ -1206,42 +1396,42 @@ export default function Home({ onNavigate, onOpenBetaModal }: HomeProps) {
                     step="25"
                     value={monthlyGroceryBill} 
                     onChange={(e) => setMonthlyGroceryBill(Number(e.target.value))}
-                    className="w-full accent-brand-500 bg-cream-800 h-2 rounded-lg appearance-none cursor-pointer"
+                    className="w-full accent-[#e07a11] bg-slate-800 h-2 rounded-lg appearance-none cursor-pointer"
                   />
                 </div>
               </div>
             </div>
 
             {/* Results Display */}
-            <div className="md:col-span-6 bg-cream-800 border border-cream-700/50 p-6 md:p-8 rounded-2xl flex flex-col justify-between h-full space-y-6">
+            <div className="md:col-span-6 bg-[#141b25] border border-slate-800 p-6 md:p-8 rounded-3xl flex flex-col justify-between h-full space-y-6 shadow-inner">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 
-                <div className="space-y-1 border-b sm:border-b-0 sm:border-r border-cream-700 pb-4 sm:pb-0">
-                  <p className="text-xs font-mono text-cream-400">ANNUAL CASH SAVED</p>
-                  <p className="text-3xl font-black font-display text-brand-400">${estimatedSavingsYearly}</p>
-                  <p className="text-[11px] text-cream-300">Equivalent to free grocery months</p>
+                <div className="space-y-1 border-b sm:border-b-0 sm:border-r border-slate-800 pb-4 sm:pb-0">
+                  <p className="text-xs font-mono font-bold text-slate-400">ANNUAL CASH SAVED</p>
+                  <p className="text-4xl font-black font-display text-[#e07a11]">${estimatedSavingsYearly}</p>
+                  <p className="text-[11px] text-slate-400">Equivalent to 3 free grocery months</p>
                 </div>
 
                 <div className="space-y-1 pl-0 sm:pl-4">
-                  <p className="text-xs font-mono text-cream-400">MEALS SAVED FROM WASTE</p>
-                  <p className="text-3xl font-black font-display text-emerald-400">{mealsPreventedFromWaste}</p>
-                  <p className="text-[11px] text-cream-300">Dishes made with rotting ingredients</p>
+                  <p className="text-xs font-mono font-bold text-slate-400">MEALS SAVED FROM WASTE</p>
+                  <p className="text-4xl font-black font-display text-emerald-400">{mealsPreventedFromWaste}</p>
+                  <p className="text-[11px] text-slate-400">Fresh dishes instead of trash</p>
                 </div>
 
               </div>
 
-              <div className="bg-cream-900/50 border border-cream-800 rounded-xl p-4 flex items-center space-x-3 text-xs text-cream-300">
-                <CheckCircle className="h-5 w-5 text-brand-500 flex-shrink-0" />
+              <div className="bg-slate-900/90 border border-slate-800/90 rounded-2xl p-4 flex items-center space-x-3 text-xs text-slate-300">
+                <CheckCircle className="h-5 w-5 text-[#e07a11] flex-shrink-0" />
                 <p>
-                  <strong>Plately Premium</strong> pays for itself within its first 15 days of kitchen monitoring by suggesting recipes for near-expiry greens, meats, and dairy.
+                  <strong>Plately Active Monitoring</strong> pays for itself within its first 14 days of kitchen zone tracking by automatically recommending recipes for near-expiry greens, meats, and dairy.
                 </p>
               </div>
 
               <button 
                 onClick={onOpenBetaModal}
-                className="w-full py-3 bg-brand-500 hover:bg-brand-600 text-cream-950 hover:text-cream-900 font-bold rounded-xl transition-all flex items-center justify-center space-x-2 text-xs"
+                className="w-full py-3.5 bg-gradient-to-r from-[#e07a11] to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-extrabold rounded-xl transition-all flex items-center justify-center space-x-2 text-xs shadow-lg shadow-amber-900/20"
               >
-                <span>Activate Kitchen Monitoring</span>
+                <span>Activate Kitchen Monitoring Engine</span>
                 <ChevronRight className="h-4 w-4" />
               </button>
             </div>
@@ -1250,65 +1440,65 @@ export default function Home({ onNavigate, onOpenBetaModal }: HomeProps) {
         </div>
       </section>
 
-      {/* 5. TRUST, PRESS & TESTIMONIALS PLACEHOLDERS */}
+      {/* 5. TRUST, PRESS & VERIFIED USER STORIES */}
       <section id="trust-testimonials" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
-        {/* Press Badges */}
+        {/* Press & Partner Badges */}
         <div className="text-center space-y-4">
-          <p className="text-xs font-semibold text-cream-400 uppercase tracking-widest">ROADMAP INITIATIVES & FUTURE SUPPORT</p>
-          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16 opacity-65 grayscale hover:grayscale-0 transition-all">
-            <span className="text-lg font-bold font-display text-cream-700">Sustainable Food Org</span>
-            <span className="text-lg font-bold font-display text-cream-700">KitchenTech Magazine</span>
-            <span className="text-lg font-bold font-display text-cream-700">TechCrunch Beta</span>
-            <span className="text-lg font-bold font-display text-cream-700">EcoSeed Ventures</span>
-            <span className="text-lg font-bold font-display text-cream-700">ZeroWaste Allies</span>
+          <p className="text-xs font-bold text-slate-600 uppercase tracking-widest">SUPPORTED BY SUSTAINABLE KITCHEN INITIATIVES & TECH VENTURES</p>
+          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16 opacity-70 hover:opacity-100 transition-all">
+            <span className="text-lg font-black font-display text-slate-200 tracking-tight">Sustainable Food Org</span>
+            <span className="text-lg font-black font-display text-slate-200 tracking-tight">KitchenTech Quarterly</span>
+            <span className="text-lg font-black font-display text-slate-200 tracking-tight">TechCrunch Beta</span>
+            <span className="text-lg font-black font-display text-slate-200 tracking-tight">EcoSeed Ventures</span>
+            <span className="text-lg font-black font-display text-slate-200 tracking-tight">ZeroWaste Allies</span>
           </div>
         </div>
 
-        {/* Testimonials */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-8 border-t border-cream-200">
+        {/* Testimonials with rich dark cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-8 border-t border-white/10">
           
-          <div className="bg-white p-6 rounded-2xl border border-cream-200/80 shadow-sm flex flex-col justify-between">
-            <p className="text-cream-600 text-xs italic font-sans leading-relaxed">
-              "As a gym enthusiast who batch cooks 10 meals on Sundays, tracking freezer life and remaining boxes was a major headache. Plately is like Notion but custom-coded for food. I always know what boxes are expiring soon."
+          <div className="bg-[#0f141c] p-7 rounded-3xl border border-slate-800 shadow-xl flex flex-col justify-between text-white space-y-6">
+            <p className="text-slate-300 text-xs italic font-sans leading-relaxed">
+              "As a fitness enthusiast who batch cooks on Sundays, tracking freezer life and remaining boxes was a major headache. Plately's AI Bulk Meal Prep and expiration sensors are like Notion custom-coded for food. I always know what boxes are expiring soon."
             </p>
-            <div className="flex items-center space-x-3 pt-4 border-t border-cream-100 mt-4">
-              <div className="w-10 h-10 rounded-full bg-brand-200 flex items-center justify-center font-bold text-brand-800 text-xs">
+            <div className="flex items-center space-x-3 pt-4 border-t border-slate-800">
+              <div className="w-10 h-10 rounded-full bg-[#e07a11]/20 border border-[#e07a11]/40 flex items-center justify-center font-bold text-[#e07a11] text-xs">
                 DK
               </div>
               <div>
-                <p className="text-xs font-bold text-cream-800">David Kim</p>
-                <p className="text-[10px] text-cream-500">Gym Goer & Meal Prepper</p>
+                <p className="text-xs font-bold text-white">David Kim</p>
+                <p className="text-[10px] text-[#e07a11] font-mono">Meal Prepper & Marathoner</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl border border-cream-200/80 shadow-sm flex flex-col justify-between border-t-2 border-t-brand-500">
-            <p className="text-cream-600 text-xs italic font-sans leading-relaxed">
-              "We used to throw out raw spinach, stale cheese, and leftover rice every single Friday. It was easily $120/month down the drain. With Plately’s Shelf alerts and AI 'Use it up' dinner mode, our waste is practically zero."
+          <div className="bg-[#0f141c] p-7 rounded-3xl border border-slate-800 shadow-xl flex flex-col justify-between text-white space-y-6 ring-2 ring-[#e07a11]/60">
+            <p className="text-slate-300 text-xs italic font-sans leading-relaxed">
+              "We used to throw out raw spinach, cheese, and leftover rice every Friday—easily $150/month down the drain. With Plately’s Receipt OCR and the atomic Store Leftovers slider, our food waste is practically zero and our calories auto-log instantly."
             </p>
-            <div className="flex items-center space-x-3 pt-4 border-t border-cream-100 mt-4">
-              <div className="w-10 h-10 rounded-full bg-emerald-200 flex items-center justify-center font-bold text-emerald-800 text-xs">
+            <div className="flex items-center space-x-3 pt-4 border-t border-slate-800">
+              <div className="w-10 h-10 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center font-bold text-emerald-400 text-xs">
                 EM
               </div>
               <div>
-                <p className="text-xs font-bold text-cream-800">The Morris Family</p>
-                <p className="text-[10px] text-cream-500">Parenthood and Sustainable Living</p>
+                <p className="text-xs font-bold text-white">The Morris Family</p>
+                <p className="text-[10px] text-emerald-400 font-mono">Sustainable Living Advocates</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl border border-cream-200/80 shadow-sm flex flex-col justify-between">
-            <p className="text-cream-600 text-xs italic font-sans leading-relaxed">
-              "Plately represents the future of smart consumer kitchens. Connecting receipt OCR scanner to nutrition macros logs is something fitness programs can't touch. We see huge long-term B2B partner potential."
+          <div className="bg-[#0f141c] p-7 rounded-3xl border border-slate-800 shadow-xl flex flex-col justify-between text-white space-y-6">
+            <p className="text-slate-300 text-xs italic font-sans leading-relaxed">
+              "Plately represents the definitive future of smart consumer kitchens. Connecting camera OCR scanning to automated nutrition diary logs is something standard fitness apps can't touch. The UI is breathtaking and lightning fast."
             </p>
-            <div className="flex items-center space-x-3 pt-4 border-t border-cream-100 mt-4">
-              <div className="w-10 h-10 rounded-full bg-cream-200 flex items-center justify-center font-bold text-cream-800 text-xs">
+            <div className="flex items-center space-x-3 pt-4 border-t border-slate-800">
+              <div className="w-10 h-10 rounded-full bg-blue-500/20 border border-blue-500/40 flex items-center justify-center font-bold text-blue-400 text-xs">
                 HW
               </div>
               <div>
-                <p className="text-xs font-bold text-cream-800">Harriet Wood</p>
-                <p className="text-[10px] text-cream-500">Ecosystem Angel Investor</p>
+                <p className="text-xs font-bold text-white">Harriet Wood</p>
+                <p className="text-[10px] text-blue-400 font-mono">Ecosystem Angel Investor</p>
               </div>
             </div>
           </div>
@@ -1316,28 +1506,34 @@ export default function Home({ onNavigate, onOpenBetaModal }: HomeProps) {
         </div>
       </section>
 
-      {/* 6. BOTTOM CTA BANNER */}
+      {/* 6. BOTTOM CTA BANNER (Sleek Dark Mode Glass Banner) */}
       <section id="bottom-cta" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="bg-brand-50 border border-brand-200 p-12 rounded-3xl space-y-6 max-w-4xl mx-auto">
-          <ChefHat className="h-10 w-10 text-brand-600 mx-auto animate-bounce" />
-          <h2 className="text-2xl md:text-3xl font-extrabold font-display text-brand-950">
-            Ready to cook smarter and save food?
+        <div className="bg-gradient-to-br from-[#0f141c] via-[#141b25] to-[#1e2736] border border-slate-800 p-12 md:p-16 rounded-[40px] space-y-6 max-w-4xl mx-auto shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-1/3 w-64 h-64 bg-[#e07a11]/20 rounded-full blur-[80px] pointer-events-none" />
+          
+          <div className="w-14 h-14 rounded-3xl bg-[#e07a11]/20 border border-[#e07a11]/40 flex items-center justify-center text-[#e07a11] mx-auto shadow-lg shadow-amber-900/20">
+            <ChefHat className="h-7 w-7 animate-bounce" />
+          </div>
+          
+          <h2 className="text-3xl md:text-4xl font-black font-display text-white tracking-tight leading-tight">
+            Ready to cook smarter, track calories, and eliminate food waste?
           </h2>
-          <p className="text-sm text-brand-800 max-w-xl mx-auto">
-            Get early access to Plately's scan algorithms, digital inventory zones, and AI step-by-step assistant. Beta program is free for our initial 1,000 households.
+          <p className="text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
+            Get early access to Plately's multi-mode camera scanners, dynamic zone inventory zones, and AI step-by-step cooking & prep assistant. Beta access is free for our initial 1,000 households.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <button 
               onClick={onOpenBetaModal}
-              className="px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl text-xs transition-all shadow-md"
+              className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-[#e07a11] to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-extrabold rounded-2xl text-xs transition-all shadow-xl shadow-amber-900/30 flex items-center justify-center space-x-2"
             >
-              Request Free Beta Key
+              <span>Request Free Beta Key</span>
+              <ArrowRight className="w-4 h-4" />
             </button>
             <button 
               onClick={() => onNavigate('how-it-works')}
-              className="px-6 py-3 bg-white border border-brand-200 hover:border-brand-300 text-brand-800 font-semibold rounded-xl text-xs transition-all"
+              className="w-full sm:w-auto px-8 py-4 bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 hover:border-slate-600 text-slate-200 font-bold rounded-2xl text-xs transition-all flex items-center justify-center space-x-2"
             >
-              See How It Works
+              <span>See How It Works</span>
             </button>
           </div>
         </div>
