@@ -7,7 +7,8 @@ export type PageType =
   | 'pricing'
   | 'about'
   | 'faq'
-  | 'blog';
+  | 'blog'
+  | 'workshop';
 
 export interface BlogPost {
   id: string;

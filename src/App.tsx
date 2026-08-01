@@ -26,6 +26,7 @@ import Pricing from './components/Pricing';
 import About from './components/About';
 import Faq from './components/Faq';
 import Blog from './components/Blog';
+import Workshop from './components/Workshop';
 import Helmet from './components/Helmet';
 import PageLoader from './components/PageLoader';
 import PerformanceMonitor from './components/PerformanceMonitor';
@@ -80,6 +81,12 @@ const getSEO = (page: PageType) => {
         title: 'Smart Kitchen Guides, Freshness Tips & Blog',
         description: 'Expert guides on meal prep, shelf preservation, food science, and digital pantry scanning. Cook smart, waste less, and save money with Plately.',
         canonicalUrl: 'https://theplately.com/blog',
+      };
+    case 'workshop':
+      return {
+        title: 'Plately Workshop - B2B Restaurant & Kitchen Display System',
+        description: 'Synchronize your restaurant kitchen with Plately Workshop. An integrated KDS, order dispatch, and menu manager.',
+        canonicalUrl: 'https://theplately.com/workshop',
       };
     case 'home':
     default:
@@ -273,6 +280,12 @@ export default function App() {
                 >
                   How It Works
                 </button>
+                <button 
+                  onClick={() => handlePageNavigation('workshop')}
+                  className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${currentPage === 'workshop' ? 'bg-white/10 text-white shadow-sm' : 'text-slate-500 hover:text-slate-200'}`}
+                >
+                  Workshop
+                </button>
               </div>
 
               <div className="w-px h-6 bg-white/10 mx-2" />
@@ -384,6 +397,12 @@ export default function App() {
                     ⚙️ How It Works
                   </button>
                   <button 
+                    onClick={() => handlePageNavigation('workshop')}
+                    className={`p-3 text-left rounded-xl text-xs font-bold ${currentPage === 'workshop' ? 'bg-brand-500/20 text-brand-400' : 'bg-white/5 text-slate-300'}`}
+                  >
+                    🏢 Workshop
+                  </button>
+                  <button 
                     onClick={() => handlePageNavigation('ecosystem')}
                     className={`p-3 text-left rounded-xl text-xs font-bold ${currentPage === 'ecosystem' ? 'bg-accent-500/20 text-accent-400' : 'bg-white/5 text-slate-300'}`}
                   >
@@ -454,6 +473,7 @@ export default function App() {
             {currentPage === 'features' && <Features />}
             {currentPage === 'solutions' && <Solutions onNavigate={handlePageNavigation} onOpenBetaModal={handleOpenBetaModal} />}
             {currentPage === 'how-it-works' && <HowItWorks onNavigate={handlePageNavigation} onOpenBetaModal={handleOpenBetaModal} />}
+            {currentPage === 'workshop' && <Workshop />}
             {currentPage === 'ecosystem' && <Ecosystem onNavigate={handlePageNavigation} onOpenBetaModal={handleOpenBetaModal} />}
             {currentPage === 'pricing' && <Pricing onOpenBetaModal={handleOpenBetaModal} />}
             {currentPage === 'about' && <About onOpenBetaModal={handleOpenBetaModal} />}
@@ -490,6 +510,7 @@ export default function App() {
               <li><button onClick={() => handlePageNavigation('features')} className="hover:text-brand-400 transition-colors">Features breakdown</button></li>
               <li><button onClick={() => handlePageNavigation('solutions')} className="hover:text-brand-400 transition-colors">Solutions / Use Cases</button></li>
               <li><button onClick={() => handlePageNavigation('how-it-works')} className="hover:text-brand-400 transition-colors">Process / Flows</button></li>
+              <li><button onClick={() => handlePageNavigation('workshop')} className="hover:text-brand-400 transition-colors">Workshop for B2B</button></li>
               <li><button onClick={() => handlePageNavigation('pricing')} className="hover:text-brand-400 transition-colors">Demo Launch Tracker</button></li>
             </ul>
           </div>
