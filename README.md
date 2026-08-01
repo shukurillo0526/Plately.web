@@ -1,20 +1,22 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Plately Web Client
 
-# Run and deploy your AI Studio app
+Welcome to the **Plately.web** repository! This is the marketing website, documentation portal, and web app frontend for **Plately** (`theplately.com`).
 
-This contains everything you need to run your app locally.
+Plately is an AI-powered smart kitchen, pantry management, and recipe discovery platform. This repository specifically hosts the web client built using Vite, React, and Tailwind CSS.
 
-View your app in AI Studio: https://ai.studio/apps/e41d23a8-76f8-4d0b-a979-4ea455d73164
+## Getting Started
 
-## Run Locally
+To run the local development server:
 
-**Prerequisites:**  Node.js
+1. Install the dependencies:
+   ```bash
+   npm install
+   ```
+2. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
+## Deployment
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+The site is automatically deployed to GitHub Pages via a GitHub Actions workflow whenever changes are pushed to the `main` branch.
