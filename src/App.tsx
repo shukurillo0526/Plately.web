@@ -12,7 +12,8 @@ import {
   Globe, 
   Mail, 
   Flame, 
-  ChefHat 
+  ChefHat,
+  Monitor 
 } from 'lucide-react';
 
 import { PageType, BetaRegistration } from './types';
@@ -36,63 +37,63 @@ const getSEO = (page: PageType) => {
   switch (page) {
     case 'features':
       return {
-        title: 'Features & Freshness Sensors',
-        description: 'Explore Plately\'s features: high-accuracy OCR receipt scanning, digital shelf life warnings, AI-powered recipe pairing, and automated kitchen logs.',
+        title: 'Diner & Kitchen Features — Plately Ecosystem',
+        description: 'Explore Plately\'s features: high-accuracy OCR receipt scanning, digital shelf life warnings, AI recipe pairing, and zero-commission restaurant ordering.',
         canonicalUrl: 'https://theplately.com/features',
       };
     case 'solutions':
       return {
-        title: 'Smart Kitchen Use Cases & Family Plans',
-        description: 'Perfect use cases for Plately: healthy families, shared roommate houses, zero-waste meal planners, and smart appliance integrators.',
+        title: 'Use Cases & Household Solutions — Plately',
+        description: 'Perfect for healthy families, meal preppers, zero-waste households, and independent restaurants streamlining kitchen operations.',
         canonicalUrl: 'https://theplately.com/solutions',
       };
     case 'how-it-works':
       return {
-        title: 'How It Works - From Store to Plate',
-        description: 'Discover how Plately turns purchase receipts into automated digital inventories, dynamic fresh-zones, and creative zero-waste meals in seconds.',
+        title: 'How It Works — Closed-Loop Food System',
+        description: 'Discover how Plately turns grocery receipts into digital pantries and connects diners directly to local restaurant kitchens with zero commission fees.',
         canonicalUrl: 'https://theplately.com/how-it-works',
       };
     case 'ecosystem':
       return {
-        title: 'IoT Ecosystem & Hardware Roadmap',
-        description: 'Join the future of food tracking: Plately\'s IoT vision, collaborative freshness hardware, and smart kitchen integrations.',
+        title: 'Plately Ecosystem — Architecture & Strategic Roadmap',
+        description: 'Explore the two-sided Plately network: Smart Living Shelf for diners, AI-Native Website Studio and KDS for restaurants, and shared delivery fleet logistics.',
         canonicalUrl: 'https://theplately.com/ecosystem',
       };
     case 'pricing':
       return {
-        title: 'Beta Launch Tracker & Registration',
-        description: 'Track our beta launch timeline and request free access keys to get Plately on your phone for zero-waste pantry planning.',
+        title: 'Plans & Commercial Pricing — Plately',
+        description: '100% Free forever for diners and home cooks. Transparent, zero-commission subscription plans for independent restaurants using Plately Workshop.',
         canonicalUrl: 'https://theplately.com/pricing',
       };
     case 'about':
       return {
-        title: 'Meet the Solo Developer Behind Plately',
-        description: 'Read the story of Shukurillo Mamarasulov, the developer behind Plately, striving to build the ultimate zero-waste kitchen platform.',
+        title: 'About Plately — Mission & Founder Story',
+        description: 'Read the story of Shukurillo Mamarasulov and the mission behind Plately: eliminating food waste and empowering local restaurants with AI operating tools.',
         canonicalUrl: 'https://theplately.com/about',
       };
     case 'faq':
       return {
-        title: 'Help Center & Direct Hotline Support',
-        description: 'Have questions about OCR receipt matching, offline synchronizations, or premium features? Get direct hotline assistance and read Plately FAQ answers.',
+        title: 'Help Center & Frequently Asked Questions — Plately',
+        description: 'Answers about smart pantry tracking, receipt scanning, table reservations, Plately Workshop KDS, and restaurant onboarding.',
         canonicalUrl: 'https://theplately.com/faq',
       };
     case 'blog':
       return {
-        title: 'Smart Kitchen Guides, Freshness Tips & Blog',
-        description: 'Expert guides on meal prep, shelf preservation, food science, and digital pantry scanning. Cook smart, waste less, and save money with Plately.',
+        title: 'Culinary Intelligence & Kitchen Science Blog — Plately',
+        description: 'Guides on food waste prevention, chef techniques, kitchen display operations, and restaurant website conversion.',
         canonicalUrl: 'https://theplately.com/blog',
       };
     case 'workshop':
       return {
-        title: 'Plately Workshop - B2B Restaurant & Kitchen Display System',
-        description: 'Synchronize your restaurant kitchen with Plately Workshop. An integrated KDS, order dispatch, and menu manager.',
+        title: 'Plately Workshop — AI Website Studio, Realtime KDS & Restaurant OS',
+        description: 'The all-in-one operating engine for restaurants: AI-native website studio, real-time KDS, visual floor plan table reservations, and Noor fleet dispatch.',
         canonicalUrl: 'https://theplately.com/workshop',
       };
     case 'home':
     default:
       return {
-        title: 'Plately - Smart Kitchen Assistant, Recipe Scanner & Pantry Planner',
-        description: 'Reduce food waste and cook smarter with Plately. Scan receipts, track fridge shelf freshness, get AI recipe ideas, and plan sustainable grocery shopping.',
+        title: 'Plately — The Unified Operating System for Food & Restaurants',
+        description: 'Where home cooks master their kitchens and local restaurants thrive. AI-powered pantry tracking, direct table reservations, real-time KDS, and automated AI website storefronts.',
         canonicalUrl: 'https://theplately.com',
       };
   }
@@ -227,15 +228,27 @@ export default function App() {
       <PerformanceMonitor page={currentPage} />
       
       {/* GLOBAL NOTIFICATION RUNNING HEADER banner */}
-      <div className="bg-black/40 text-cream-200 py-2 px-4 text-center text-[11px] font-medium border-b border-white/5 flex items-center justify-center space-x-2">
-        <Sparkles className="h-3.5 w-3.5 text-brand-400 animate-pulse" />
-        <span>Summer Beta program is fully open. {totalBetaCount} active kitchens currently synchronized.</span>
-        <a 
-          href="https://app.theplately.com"
-          className="underline text-brand-400 hover:text-brand-300 font-bold ml-1.5"
-        >
-          Open App →
-        </a>
+      <div className="bg-black/50 text-cream-200 py-2 px-4 text-center text-[11px] font-medium border-b border-white/5 flex items-center justify-center flex-wrap gap-2">
+        <div className="flex items-center space-x-1.5">
+          <Sparkles className="h-3.5 w-3.5 text-brand-400 animate-pulse" />
+          <span className="font-semibold text-white">Plately 2.0 Ecosystem Online:</span>
+          <span className="text-slate-400">Smart Kitchen App for Diners & AI-Native Workshop for Restaurants.</span>
+        </div>
+        <div className="flex items-center space-x-2 text-[11px]">
+          <a 
+            href="https://app.theplately.com"
+            className="underline text-brand-400 hover:text-brand-300 font-bold"
+          >
+            Open Diner App →
+          </a>
+          <span className="text-white/20">•</span>
+          <button 
+            onClick={() => handlePageNavigation('workshop')}
+            className="underline text-emerald-400 hover:text-emerald-300 font-bold"
+          >
+            Explore Workshop OS →
+          </button>
+        </div>
       </div>
 
       {/* HEADER NAVIGATION BAR */}
@@ -253,38 +266,44 @@ export default function App() {
               </div>
               <div>
                 <span className="text-xl font-bold font-display tracking-tight text-white">Plately</span>
-                <span className="text-[10px] font-mono text-brand-400 block -mt-1 font-semibold uppercase">Smart Kitchen</span>
+                <span className="text-[10px] font-mono text-brand-400 block -mt-1 font-semibold uppercase tracking-wider">Food Ecosystem</span>
               </div>
             </div>
 
             {/* Desktop Nav Links */}
             <nav className="hidden lg:flex items-center space-x-1">
               
-              {/* Product Category Group */}
+              {/* Diners & Consumer Group */}
               <div className="flex items-center space-x-1 bg-white/5 p-1 rounded-xl border border-white/5">
                 <button 
                   onClick={() => handlePageNavigation('features')}
-                  className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${currentPage === 'features' ? 'bg-white/10 text-white shadow-sm' : 'text-slate-500 hover:text-slate-200'}`}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${currentPage === 'features' ? 'bg-white/10 text-white shadow-sm' : 'text-slate-400 hover:text-slate-200'}`}
                 >
                   Features
                 </button>
                 <button 
                   onClick={() => handlePageNavigation('solutions')}
-                  className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${currentPage === 'solutions' ? 'bg-white/10 text-white shadow-sm' : 'text-slate-500 hover:text-slate-200'}`}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${currentPage === 'solutions' ? 'bg-white/10 text-white shadow-sm' : 'text-slate-400 hover:text-slate-200'}`}
                 >
                   Use Cases
                 </button>
                 <button 
                   onClick={() => handlePageNavigation('how-it-works')}
-                  className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${currentPage === 'how-it-works' ? 'bg-white/10 text-white shadow-sm' : 'text-slate-500 hover:text-slate-200'}`}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${currentPage === 'how-it-works' ? 'bg-white/10 text-white shadow-sm' : 'text-slate-400 hover:text-slate-200'}`}
                 >
                   How It Works
                 </button>
+              </div>
+
+              {/* Restaurant B2B Group */}
+              <div className="flex items-center space-x-1 bg-brand-500/10 p-1 rounded-xl border border-brand-500/20 ml-1">
                 <button 
                   onClick={() => handlePageNavigation('workshop')}
-                  className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${currentPage === 'workshop' ? 'bg-white/10 text-white shadow-sm' : 'text-slate-500 hover:text-slate-200'}`}
+                  className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center space-x-1.5 ${currentPage === 'workshop' ? 'bg-brand-500 text-white shadow-sm' : 'text-brand-300 hover:text-white'}`}
                 >
-                  Workshop
+                  <ChefHat className="w-3.5 h-3.5" />
+                  <span>Workshop B2B</span>
+                  <span className="text-[9px] bg-brand-400/30 text-brand-200 px-1 rounded uppercase font-mono">OS</span>
                 </button>
               </div>
 
@@ -294,51 +313,47 @@ export default function App() {
               <div className="flex items-center space-x-1">
                 <button 
                   onClick={() => handlePageNavigation('ecosystem')}
-                  className={`px-3 py-2 rounded-lg text-xs font-bold transition-all ${currentPage === 'ecosystem' ? 'text-accent-400 bg-accent-500/10' : 'text-slate-500 hover:text-slate-200'}`}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${currentPage === 'ecosystem' ? 'text-accent-400 bg-accent-500/10' : 'text-slate-400 hover:text-slate-200'}`}
                 >
                   Roadmap
                 </button>
                 <button 
                   onClick={() => handlePageNavigation('pricing')}
-                  className={`px-3 py-2 rounded-lg text-xs font-bold transition-all ${currentPage === 'pricing' ? 'text-brand-400 bg-brand-500/10' : 'text-slate-500 hover:text-slate-200'}`}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${currentPage === 'pricing' ? 'text-brand-400 bg-brand-500/10' : 'text-slate-400 hover:text-slate-200'}`}
                 >
-                  Demo Launch
+                  Pricing
                 </button>
                 <button 
                   onClick={() => handlePageNavigation('about')}
-                  className={`px-3 py-2 rounded-lg text-xs font-bold transition-all ${currentPage === 'about' ? 'text-white' : 'text-slate-500 hover:text-slate-200'}`}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${currentPage === 'about' ? 'text-white' : 'text-slate-400 hover:text-slate-200'}`}
                 >
                   Story
                 </button>
                 <button 
                   onClick={() => handlePageNavigation('faq')}
-                  className={`px-3 py-2 rounded-lg text-xs font-bold transition-all ${currentPage === 'faq' ? 'text-white' : 'text-slate-500 hover:text-slate-200'}`}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${currentPage === 'faq' ? 'text-white' : 'text-slate-400 hover:text-slate-200'}`}
                 >
                   FAQ
-                </button>
-                <button 
-                  onClick={() => handlePageNavigation('blog')}
-                  className={`px-3 py-2 rounded-lg text-xs font-bold transition-all ${currentPage === 'blog' ? 'text-white' : 'text-slate-500 hover:text-slate-200'}`}
-                >
-                  Blog
                 </button>
               </div>
 
             </nav>
 
             {/* Header Right CTAs */}
-            <div className="hidden lg:flex items-center space-x-3">
-              <a 
-                href="https://app.theplately.com" 
-                className="text-xs font-bold text-slate-400 hover:text-white px-3 py-2"
+            <div className="hidden lg:flex items-center space-x-2.5">
+              <button 
+                onClick={() => handlePageNavigation('workshop')}
+                className="text-xs font-bold text-slate-300 hover:text-white px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-all flex items-center space-x-1.5"
               >
-                Sign In
-              </a>
+                <Monitor className="w-3.5 h-3.5 text-brand-400" />
+                <span>Restaurant OS</span>
+              </button>
               <a 
                 href="https://app.theplately.com"
-                className="px-5 py-2.5 bg-brand-500 hover:bg-brand-400 text-white text-xs font-bold rounded-xl shadow-[0_0_15px_rgba(249,139,37,0.3)] transition-all"
+                className="px-4 py-2 bg-brand-500 hover:bg-brand-400 text-white text-xs font-bold rounded-xl shadow-[0_0_15px_rgba(249,139,37,0.3)] transition-all flex items-center space-x-1"
               >
-                Open Web App
+                <span>Open Diner App</span>
+                <span className="text-[10px] opacity-75">↗</span>
               </a>
             </div>
 
@@ -398,9 +413,9 @@ export default function App() {
                   </button>
                   <button 
                     onClick={() => handlePageNavigation('workshop')}
-                    className={`p-3 text-left rounded-xl text-xs font-bold ${currentPage === 'workshop' ? 'bg-brand-500/20 text-brand-400' : 'bg-white/5 text-slate-300'}`}
+                    className={`p-3 text-left rounded-xl text-xs font-bold ${currentPage === 'workshop' ? 'bg-brand-500 text-white' : 'bg-brand-500/15 text-brand-300 border border-brand-500/30'}`}
                   >
-                    🏢 Workshop
+                    👨‍🍳 Workshop OS
                   </button>
                   <button 
                     onClick={() => handlePageNavigation('ecosystem')}
@@ -408,15 +423,30 @@ export default function App() {
                   >
                     🗺️ Roadmap
                   </button>
+                  <button 
+                    onClick={() => handlePageNavigation('pricing')}
+                    className={`p-3 text-left rounded-xl text-xs font-bold ${currentPage === 'pricing' ? 'bg-brand-500/20 text-brand-400' : 'bg-white/5 text-slate-300'}`}
+                  >
+                    💳 Plans & Pricing
+                  </button>
+                </div>
+
+                <div className="border-t border-white/10 pt-3 space-y-2">
+                  <a 
+                    href="https://app.theplately.com"
+                    className="w-full py-3 bg-brand-500 text-white font-bold rounded-xl text-xs text-center block shadow-md"
+                  >
+                    Open Diner App →
+                  </a>
+                  <button 
+                    onClick={() => handlePageNavigation('workshop')}
+                    className="w-full py-2.5 bg-white/5 border border-white/10 text-slate-200 font-bold rounded-xl text-xs text-center block"
+                  >
+                    Open Restaurant Workshop
+                  </button>
                 </div>
 
                 <div className="border-t border-white/10 pt-2 space-y-1">
-                  <button 
-                    onClick={() => handlePageNavigation('pricing')}
-                    className={`w-full p-2.5 text-left rounded-lg text-xs font-semibold ${currentPage === 'pricing' ? 'text-brand-400 bg-brand-500/10' : 'text-slate-400 hover:bg-white/5'}`}
-                  >
-                    Demo Launch Tracker
-                  </button>
                   <button 
                     onClick={() => handlePageNavigation('about')}
                     className={`w-full p-2.5 text-left rounded-lg text-xs font-semibold ${currentPage === 'about' ? 'text-white bg-white/10' : 'text-slate-400 hover:bg-white/5'}`}
@@ -428,12 +458,6 @@ export default function App() {
                     className={`w-full p-2.5 text-left rounded-lg text-xs font-semibold ${currentPage === 'faq' ? 'text-white bg-white/10' : 'text-slate-400 hover:bg-white/5'}`}
                   >
                     FAQ Help
-                  </button>
-                  <button 
-                    onClick={() => handlePageNavigation('blog')}
-                    className={`w-full p-2.5 text-left rounded-lg text-xs font-semibold ${currentPage === 'blog' ? 'text-white bg-white/10' : 'text-slate-400 hover:bg-white/5'}`}
-                  >
-                    Resources & Blog
                   </button>
                 </div>
 
@@ -496,7 +520,7 @@ export default function App() {
               <span className="text-lg font-bold font-display text-white tracking-tight">Plately</span>
             </div>
             <p className="text-xs leading-relaxed max-w-sm">
-              Connecting retail scanning, digital freshness zoning, and automated diet tracking to eliminate food waste and support home cooks.
+              The all-in-one culinary and restaurant operating system. Bridging smart kitchen management with live restaurant KDS, table reservations, and automated AI website storefronts.
             </p>
             <p className="text-[10px] text-slate-500 font-mono">
               Designed & developed in Washington, USA.
@@ -507,22 +531,22 @@ export default function App() {
           <div className="md:col-span-2 space-y-4 text-xs">
             <h4 className="font-bold text-white uppercase tracking-wider font-display">Product</h4>
             <ul className="space-y-2.5 font-medium">
-              <li><button onClick={() => handlePageNavigation('features')} className="hover:text-brand-400 transition-colors">Features breakdown</button></li>
-              <li><button onClick={() => handlePageNavigation('solutions')} className="hover:text-brand-400 transition-colors">Solutions / Use Cases</button></li>
-              <li><button onClick={() => handlePageNavigation('how-it-works')} className="hover:text-brand-400 transition-colors">Process / Flows</button></li>
-              <li><button onClick={() => handlePageNavigation('workshop')} className="hover:text-brand-400 transition-colors">Workshop for B2B</button></li>
-              <li><button onClick={() => handlePageNavigation('pricing')} className="hover:text-brand-400 transition-colors">Demo Launch Tracker</button></li>
+              <li><button onClick={() => handlePageNavigation('features')} className="hover:text-brand-400 transition-colors">Diner Features</button></li>
+              <li><button onClick={() => handlePageNavigation('solutions')} className="hover:text-brand-400 transition-colors">Use Cases & Solutions</button></li>
+              <li><button onClick={() => handlePageNavigation('how-it-works')} className="hover:text-brand-400 transition-colors">Closed-Loop Flow</button></li>
+              <li><button onClick={() => handlePageNavigation('workshop')} className="hover:text-brand-400 transition-colors text-brand-400 font-semibold">Workshop Restaurant OS</button></li>
+              <li><button onClick={() => handlePageNavigation('pricing')} className="hover:text-brand-400 transition-colors">Plans & Pricing</button></li>
             </ul>
           </div>
 
           {/* Links Column 2: Company */}
           <div className="md:col-span-2 space-y-4 text-xs">
-            <h4 className="font-bold text-white uppercase tracking-wider font-display">Company</h4>
+            <h4 className="font-bold text-white uppercase tracking-wider font-display">Ecosystem</h4>
             <ul className="space-y-2.5 font-medium">
-              <li><button onClick={() => handlePageNavigation('about')} className="hover:text-brand-400 transition-colors">Founder & Mission</button></li>
-              <li><button onClick={() => handlePageNavigation('faq')} className="hover:text-brand-400 transition-colors">FAQ Support</button></li>
-              <li><button onClick={() => handlePageNavigation('blog')} className="hover:text-brand-400 transition-colors">Resources / Blog</button></li>
               <li><button onClick={() => handlePageNavigation('ecosystem')} className="hover:text-brand-400 transition-colors">Roadmap & Vision</button></li>
+              <li><button onClick={() => handlePageNavigation('about')} className="hover:text-brand-400 transition-colors">Founder & Mission</button></li>
+              <li><button onClick={() => handlePageNavigation('faq')} className="hover:text-brand-400 transition-colors">FAQ & Support</button></li>
+              <li><button onClick={() => handlePageNavigation('blog')} className="hover:text-brand-400 transition-colors">Culinary Blog</button></li>
             </ul>
           </div>
 

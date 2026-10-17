@@ -1,229 +1,352 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   Check, 
-  Info, 
-  ShieldCheck, 
   Sparkles, 
-  Calendar, 
-  Clock, 
-  ChevronRight, 
   ArrowRight, 
-  Activity, 
-  LockOpen, 
-  CheckCircle2, 
-  CircleDot 
+  ShieldCheck, 
+  HelpCircle, 
+  ChevronDown, 
+  Monitor, 
+  Utensils, 
+  Store, 
+  Truck, 
+  ExternalLink 
 } from 'lucide-react';
 
 interface PricingProps {
-  onOpenBetaModal: () => void;
+  onOpenBetaModal?: () => void;
 }
 
 export default function Pricing({ onOpenBetaModal }: PricingProps) {
-  const targetDate = new Date('2026-07-18T00:00:00');
-  const [timeLeft, setTimeLeft] = useState({
-    days: 6,
-    hours: 15,
-    minutes: 38,
-    seconds: 33
-  });
+  const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('annual');
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  // Calculate live countdown to 2026-07-18
-  useEffect(() => {
-    const calculateTimeLeft = () => {
-      const now = new Date();
-      // Adjust current year if system clock is different, but respect metadata year 2026
-      const difference = targetDate.getTime() - now.getTime();
-      
-      if (difference > 0) {
-        setTimeLeft({
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-          minutes: Math.floor((difference / 1000 / 60) % 60),
-          seconds: Math.floor((difference / 1000) % 60)
-        });
-      } else {
-        // Fallback static positive count for demo experience
-        setTimeLeft({ days: 5, hours: 15, minutes: 39, seconds: 12 });
-      }
-    };
+  const toggleFaq = (index: number) => {
+    setOpenFaq(openFaq === index ? null : index);
+  };
 
-    calculateTimeLeft();
-    const timer = setInterval(calculateTimeLeft, 1000);
-    return () => clearInterval(timer);
-  }, []);
+  const faqs = [
+    {
+      q: "Do diners or consumers ever pay fees on Plately?",
+      a: "Never. The Plately client app is 100% free forever for all home cooks and diners. You get full access to the Smart Living Shelf, 6-signal AI recipe recommendations, hands-free cook mode, calorie vision, and direct 0% fee restaurant ordering."
+    },
+    {
+      q: "How does Plately charge 0% commission on restaurant orders?",
+      a: "Traditional aggregators charge up to 30% per order because they maintain expensive middleman bloat. Plately operates as modern SaaS software. We charge flat, transparent software tiers (or free on Starter) rather than taxing your kitchen's hard-earned gross sales."
+    },
+    {
+      q: "Can I connect my own custom domain to my restaurant storefront?",
+      a: "Yes! On Workshop Pro, you can connect your existing domain (such as order.yourbrand.com or eat.restaurant.uz). We automatically provision edge SSL certificates and routing via our Edge Proxy infrastructure in seconds."
+    },
+    {
+      q: "What hardware is required to run the Workshop KDS?",
+      a: "No proprietary hardware lock-in. Plately Workshop KDS runs smoothly in any modern web browser on existing iPads, Android tablets, desktop touch monitors, or smart TVs with low-latency WebSockets."
+    },
+    {
+      q: "How does Noor Courier Fleet dispatch work?",
+      a: "When a customer places a delivery order through your storefront or the Plately app, Workshop calculates the kitchen's live cook completion ETA and dispatches the closest Noor courier automatically, preventing cold food and driver wait times."
+    }
+  ];
 
   return (
-    <div className="space-y-16 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 font-sans">
+    <div className="space-y-20 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 font-sans text-white">
       
-      {/* HEADER SECTION */}
-      <section className="text-center pt-12 max-w-4xl mx-auto">
-        <span className="text-xs font-bold text-brand-400 bg-brand-500/10 border border-brand-500/30 px-3.5 py-1.5 rounded-full uppercase tracking-wider font-mono inline-flex items-center space-x-1.5">
-          <CircleDot className="h-3 w-3 text-brand-500 animate-pulse" />
-          <span>Demo Sandbox Mode - v0.1.9</span>
+      {/* 1. HEADER SECTION */}
+      <section className="text-center pt-12 max-w-4xl mx-auto space-y-4">
+        <span className="text-xs font-bold text-brand-400 bg-brand-500/10 border border-brand-500/30 px-4 py-1.5 rounded-full uppercase tracking-wider font-mono inline-flex items-center space-x-1.5">
+          <Sparkles className="h-3.5 w-3.5 text-brand-400" />
+          <span>TRANSPARENT TWO-SIDED PRICING</span>
         </span>
-        <h1 className="text-4xl md:text-5xl font-extrabold font-display text-white mt-4 tracking-tight leading-tight">
-          Everything is 100% Free. <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 via-brand-500 to-emerald-600">
-            No payments. No credentials.
+
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black font-display text-white tracking-tight leading-tight">
+          0% Commission. <br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 via-orange-400 to-emerald-400">
+            Zero Hidden Take-Rates.
           </span>
         </h1>
-        <p className="text-sm md:text-base text-slate-400 mt-4 max-w-2xl mx-auto leading-relaxed">
-          As a public demo and prototype, Plately does not have any active paid subscription structures. All premium food waste mitigation trackers, AI-powered recipes, and scanning services are unlocked for open evaluation.
+
+        <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed font-sans">
+          Plately is free for home cooks and food lovers forever. For restaurants, we replace predatory 30% delivery aggregator fees with flat, predictable software plans.
         </p>
+
+        {/* Billing Switcher */}
+        <div className="pt-4 flex items-center justify-center space-x-3">
+          <span className={`text-xs font-bold ${billingCycle === 'monthly' ? 'text-white' : 'text-slate-400'}`}>Monthly</span>
+          <button
+            onClick={() => setBillingCycle(billingCycle === 'monthly' ? 'annual' : 'monthly')}
+            className="w-14 h-8 bg-slate-800 rounded-full p-1 relative transition-colors border border-slate-700"
+          >
+            <div
+              className={`w-6 h-6 rounded-full bg-brand-500 shadow-md transform transition-transform ${
+                billingCycle === 'annual' ? 'translate-x-6' : 'translate-x-0'
+              }`}
+            />
+          </button>
+          <span className={`text-xs font-bold flex items-center space-x-1.5 ${billingCycle === 'annual' ? 'text-emerald-400' : 'text-slate-400'}`}>
+            <span>Annual</span>
+            <span className="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full font-mono">SAVE 20%</span>
+          </span>
+        </div>
       </section>
 
-      {/* LAUNCH COUNTDOWN & PROGRESS BANNER */}
-      <section className="max-w-4xl mx-auto glass-panel border border-white/10 p-8 rounded-3xl shadow-sm relative overflow-hidden">
-        {/* Background decorative accent */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-brand-500/10 rounded-full blur-3xl -z-10 opacity-60" />
+      {/* 2. THREE PRICING TIERS */}
+      <section className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
         
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-          
-          {/* Milestone and Countdown */}
-          <div className="md:col-span-7 space-y-5">
-            <div className="inline-flex items-center space-x-2 bg-brand-500/20 text-brand-300 text-xs font-extrabold px-3 py-1 rounded-lg uppercase tracking-wide font-mono">
-              <Sparkles className="h-3.5 w-3.5 text-brand-500 animate-pulse" />
-              <span>Milestone: v0.2.0 Demo Launch</span>
+        {/* Tier 1: Diners & Food Lovers */}
+        <div className="bg-[#0f141f] border border-white/10 rounded-3xl p-8 space-y-6 flex flex-col justify-between shadow-xl hover:border-brand-500/40 transition-all relative">
+          <div className="space-y-4">
+            <div className="inline-flex items-center space-x-1.5 text-xs font-mono font-bold text-brand-400 bg-brand-500/10 px-3 py-1 rounded-full border border-brand-500/20">
+              <Utensils className="w-3.5 h-3.5" />
+              <span>FOR DINERS & HOME COOKS</span>
             </div>
-            
-            <h2 className="text-2xl md:text-3xl font-extrabold font-display text-white leading-tight">
-              Planned for July 18, 2026
-            </h2>
-            
-            <p className="text-xs text-slate-400 max-w-md leading-relaxed">
-              We are currently in final development, resolving real-time syncing pipelines, expanding local storage buffers, and validating OCR scanner confidence scores for our first official milestone release.
-            </p>
 
-            {/* Micro Progress Bar */}
-            <div className="space-y-2">
-              <div className="flex justify-between text-[11px] font-mono font-bold text-slate-500">
-                <span>STAGE: STABILITY & LOCALIZATION HARSHENING</span>
-                <span className="text-brand-500">92% DONE</span>
-              </div>
-              <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
-                <div className="h-full bg-brand-500 rounded-full w-[92%] transition-all" />
-              </div>
+            <div>
+              <h3 className="text-2xl font-bold font-display text-white">Diner Client</h3>
+              <p className="text-xs text-slate-400 mt-1">For individuals and families mastering home cooking & direct dining.</p>
             </div>
+
+            <div className="pt-2">
+              <span className="text-5xl font-black font-display text-white">$0</span>
+              <span className="text-xs text-slate-400 font-mono ml-2">Free Forever</span>
+            </div>
+
+            <ul className="space-y-3 pt-4 border-t border-slate-800 text-xs text-slate-300">
+              <li className="flex items-start space-x-2.5">
+                <Check className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <span><strong>Smart Living Shelf:</strong> Real-time Fridge, Freezer & Pantry tracking.</span>
+              </li>
+              <li className="flex items-start space-x-2.5">
+                <Check className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <span><strong>6-Signal AI Recipes:</strong> Tailored cook suggestions prioritizing expiring items.</span>
+              </li>
+              <li className="flex items-start space-x-2.5">
+                <Check className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <span><strong>Hands-Free Cook Mode:</strong> Vocal timers, steps, and instant substitutions.</span>
+              </li>
+              <li className="flex items-start space-x-2.5">
+                <Check className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <span><strong>Calorie Plate Scanner:</strong> Multi-mode AI vision & OCR receipt intake.</span>
+              </li>
+              <li className="flex items-start space-x-2.5">
+                <Check className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <span><strong>0% Surcharge Direct Dining:</strong> Pick tables on floor plans without fee markups.</span>
+              </li>
+            </ul>
           </div>
 
-          {/* Countdown Clock Panel */}
-          <div className="md:col-span-5 bg-slate-950 border border-white/10/80 rounded-2xl p-6 text-center space-y-4">
-            <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-slate-500 flex items-center justify-center space-x-1.5">
-              <Clock className="h-3 w-3 text-brand-500" />
-              <span>TIME REMAINING TO LAUNCH</span>
-            </span>
+          <a
+            href="https://app.theplately.com"
+            className="w-full py-3.5 bg-brand-500 hover:bg-brand-400 text-white font-bold rounded-xl text-xs transition-all shadow-md flex items-center justify-center space-x-2"
+          >
+            <span>Open Diner App Free</span>
+            <ArrowRight className="w-4 h-4" />
+          </a>
+        </div>
 
-            <div className="grid grid-cols-4 gap-2">
-              <div className="glass-panel rounded-xl p-3 border border-white/10">
-                <span className="text-2xl font-extrabold font-mono text-white block leading-none">{timeLeft.days}</span>
-                <span className="text-[9px] font-semibold text-slate-600 uppercase tracking-tight block mt-1">Days</span>
-              </div>
-              <div className="glass-panel rounded-xl p-3 border border-white/10">
-                <span className="text-2xl font-extrabold font-mono text-white block leading-none">{timeLeft.hours}</span>
-                <span className="text-[9px] font-semibold text-slate-600 uppercase tracking-tight block mt-1">Hrs</span>
-              </div>
-              <div className="glass-panel rounded-xl p-3 border border-white/10">
-                <span className="text-2xl font-extrabold font-mono text-white block leading-none">{timeLeft.minutes}</span>
-                <span className="text-[9px] font-semibold text-slate-600 uppercase tracking-tight block mt-1">Mins</span>
-              </div>
-              <div className="glass-panel rounded-xl p-3 border border-white/10">
-                <span className="text-2xl font-extrabold font-mono text-white block leading-none">{timeLeft.seconds}</span>
-                <span className="text-[9px] font-semibold text-slate-600 uppercase tracking-tight block mt-1">Secs</span>
-              </div>
-            </div>
-
-            <button 
-              onClick={onOpenBetaModal}
-              className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl transition-all shadow-sm flex items-center justify-center space-x-1"
-            >
-              <span>Get notified on release</span>
-              <ChevronRight className="h-3 w-3" />
-            </button>
+        {/* Tier 2: Workshop Starter (Most Popular) */}
+        <div className="bg-[#121824] border-2 border-emerald-500/80 rounded-3xl p-8 space-y-6 flex flex-col justify-between shadow-2xl relative ring-1 ring-emerald-500/40">
+          <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-emerald-500 text-slate-950 px-4 py-0.5 rounded-full text-[11px] font-extrabold uppercase font-mono tracking-wider shadow-md">
+            POPULAR FOR RESTAURANTS
           </div>
 
+          <div className="space-y-4">
+            <div className="inline-flex items-center space-x-1.5 text-xs font-mono font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
+              <Store className="w-3.5 h-3.5" />
+              <span>SINGLE BRANCH RESTAURANT</span>
+            </div>
+
+            <div>
+              <h3 className="text-2xl font-bold font-display text-white">Workshop Starter</h3>
+              <p className="text-xs text-slate-400 mt-1">Launch your direct online storefront & live kitchen display system.</p>
+            </div>
+
+            <div className="pt-2">
+              <span className="text-5xl font-black font-display text-white">$0</span>
+              <span className="text-xs text-slate-400 font-mono ml-2">/ month (0% Commission)</span>
+            </div>
+
+            <ul className="space-y-3 pt-4 border-t border-slate-800 text-xs text-slate-300">
+              <li className="flex items-start space-x-2.5">
+                <Check className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <span><strong>AI Website Studio:</strong> Public storefront at <code className="text-brand-300 font-mono text-[11px]">[slug].plately.app</code>.</span>
+              </li>
+              <li className="flex items-start space-x-2.5">
+                <Check className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <span><strong>Live Multi-State KDS:</strong> Up to 2 active kitchen display screens.</span>
+              </li>
+              <li className="flex items-start space-x-2.5">
+                <Check className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <span><strong>Interactive Floor Plan:</strong> Real-time guest table reservations.</span>
+              </li>
+              <li className="flex items-start space-x-2.5">
+                <Check className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <span><strong>Full Menu & Stock CRUD:</strong> Instant 86 item toggles across platforms.</span>
+              </li>
+              <li className="flex items-start space-x-2.5">
+                <Check className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <span><strong>100% Guest Data Ownership:</strong> Retain diner emails & preferences.</span>
+              </li>
+            </ul>
+          </div>
+
+          <a
+            href="https://workshop.theplately.com"
+            className="w-full py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-xl text-xs transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] flex items-center justify-center space-x-2"
+          >
+            <span>Start Free on Workshop</span>
+            <ArrowRight className="w-4 h-4" />
+          </a>
+        </div>
+
+        {/* Tier 3: Workshop Pro / Scale */}
+        <div className="bg-[#0f141f] border border-white/10 rounded-3xl p-8 space-y-6 flex flex-col justify-between shadow-xl hover:border-purple-500/40 transition-all relative">
+          <div className="space-y-4">
+            <div className="inline-flex items-center space-x-1.5 text-xs font-mono font-bold text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/20">
+              <Monitor className="w-3.5 h-3.5" />
+              <span>MULTI-LOCATION & EXPANDING</span>
+            </div>
+
+            <div>
+              <h3 className="text-2xl font-bold font-display text-white">Workshop Scale / Pro</h3>
+              <p className="text-xs text-slate-400 mt-1">For multi-branch restaurants, ghost kitchens, and hospitality brands.</p>
+            </div>
+
+            <div className="pt-2">
+              <span className="text-5xl font-black font-display text-white">
+                {billingCycle === 'annual' ? '$39' : '$49'}
+              </span>
+              <span className="text-xs text-slate-400 font-mono ml-2">/ month (0% Commission)</span>
+            </div>
+
+            <ul className="space-y-3 pt-4 border-t border-slate-800 text-xs text-slate-300">
+              <li className="flex items-start space-x-2.5">
+                <Check className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
+                <span><strong>Custom Domain & SSL:</strong> Serve on <code className="text-brand-300 font-mono text-[11px]">eat.yourbrand.com</code>.</span>
+              </li>
+              <li className="flex items-start space-x-2.5">
+                <Check className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
+                <span><strong>Unlimited KDS Screens:</strong> Prep, expo, bar, and dishwashing displays.</span>
+              </li>
+              <li className="flex items-start space-x-2.5">
+                <Check className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
+                <span><strong>Noor Logistics Fleet Dispatch:</strong> Automated driver route telemetry.</span>
+              </li>
+              <li className="flex items-start space-x-2.5">
+                <Check className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
+                <span><strong>AI Marketing Agents:</strong> Auto-generate video reels for Plately Explore.</span>
+              </li>
+              <li className="flex items-start space-x-2.5">
+                <Check className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
+                <span><strong>Staff Roles & Permissions:</strong> Owner, Manager, Chef, Server logins.</span>
+              </li>
+              <li className="flex items-start space-x-2.5">
+                <Check className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
+                <span><strong>Dedicated SLA Support:</strong> 24/7 priority onboarding & account manager.</span>
+              </li>
+            </ul>
+          </div>
+
+          <a
+            href="https://workshop.theplately.com"
+            className="w-full py-3.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-xs transition-all border border-white/10 flex items-center justify-center space-x-2"
+          >
+            <span>Launch Workshop Pro</span>
+            <ArrowRight className="w-4 h-4" />
+          </a>
+        </div>
+
+      </section>
+
+      {/* 3. THE 0% COMMISSION SAVINGS BREAKDOWN */}
+      <section className="bg-[#0f141f] border border-white/10 rounded-3xl p-8 sm:p-12 shadow-2xl space-y-8">
+        <div className="text-center max-w-2xl mx-auto space-y-2">
+          <span className="text-xs font-mono font-bold text-brand-400 uppercase tracking-widest bg-brand-500/10 px-3.5 py-1.5 rounded-full border border-brand-500/20">
+            SAVINGS COMPARISON
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-extrabold font-display text-white">
+            What 0% Commission Means for Your Bottom Line
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-400">
+            Compare monthly commission loss on traditional 30% aggregator apps versus Plately Workshop.
+          </p>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs sm:text-sm">
+            <thead>
+              <tr className="border-b border-slate-800 text-slate-400 font-mono">
+                <th className="pb-4 font-bold">MONTHLY ORDER VOLUME</th>
+                <th className="pb-4 font-bold text-red-400">30% AGGREGATOR FEE</th>
+                <th className="pb-4 font-bold text-emerald-400">PLATELY WORKSHOP (0%)</th>
+                <th className="pb-4 font-bold text-brand-400">YOUR ANNUAL SAVINGS</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-800/60 font-mono">
+              <tr>
+                <td className="py-4 font-bold text-white">$10,000 / mo</td>
+                <td className="py-4 text-red-400">-$3,000 / mo</td>
+                <td className="py-4 text-emerald-400">$0 commission</td>
+                <td className="py-4 font-bold text-brand-400">+$36,000 / year</td>
+              </tr>
+              <tr>
+                <td className="py-4 font-bold text-white">$25,000 / mo</td>
+                <td className="py-4 text-red-400">-$7,500 / mo</td>
+                <td className="py-4 text-emerald-400">$0 commission</td>
+                <td className="py-4 font-bold text-brand-400">+$90,000 / year</td>
+              </tr>
+              <tr>
+                <td className="py-4 font-bold text-white">$50,000 / mo</td>
+                <td className="py-4 text-red-400">-$15,000 / mo</td>
+                <td className="py-4 text-emerald-400">$0 commission</td>
+                <td className="py-4 font-bold text-brand-400">+$180,000 / year</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
-      {/* DETAILED FEATURES STATUS TABLE */}
-      <section className="max-w-4xl mx-auto space-y-6">
+      {/* 4. FREQUENTLY ASKED QUESTIONS */}
+      <section className="max-w-3xl mx-auto space-y-6">
         <div className="text-center space-y-2">
-          <h3 className="text-xl font-bold font-display text-white">Current Pre-Release Sandbox Status</h3>
-          <p className="text-xs text-slate-500">Compare what is ready to test today vs. planned for v0.2.0 on July 18.</p>
+          <h2 className="text-2xl sm:text-3xl font-extrabold font-display text-white">
+            Frequently Asked Questions
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-400">Everything you need to know about Plately pricing and commercial usage.</p>
         </div>
 
-        <div className="glass-panel border border-white/10 rounded-3xl overflow-hidden shadow-sm">
-          <div className="divide-y divide-slate-200">
-            
-            {/* Row 1 */}
-            <div className="p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div className="space-y-1">
-                <div className="flex items-center space-x-2">
-                  <span className="text-xs font-bold font-mono text-slate-200">LIVING SHELF INVENTORY</span>
-                  <span className="text-[9px] font-mono font-extrabold text-emerald-600 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-100">STABLE</span>
+        <div className="space-y-3 pt-4">
+          {faqs.map((faq, idx) => (
+            <div
+              key={idx}
+              className="bg-[#0f141f] border border-white/10 rounded-2xl overflow-hidden transition-all"
+            >
+              <button
+                onClick={() => toggleFaq(idx)}
+                className="w-full p-5 text-left flex items-center justify-between space-x-4 hover:bg-white/5 transition-colors"
+              >
+                <span className="font-bold text-sm text-white">{faq.q}</span>
+                <ChevronDown
+                  className={`w-4 h-4 text-slate-400 transition-transform ${
+                    openFaq === idx ? 'rotate-180 text-brand-400' : ''
+                  }`}
+                />
+              </button>
+              {openFaq === idx && (
+                <div className="px-5 pb-5 text-xs text-slate-300 leading-relaxed font-sans border-t border-slate-800/60 pt-3">
+                  {faq.a}
                 </div>
-                <p className="text-xs text-slate-400">Digitize ingredients in your fridge with dynamic freshness zones and real-time food-waste monitoring dashboards.</p>
-              </div>
-              <div className="flex items-center space-x-1.5 text-xs text-white font-bold bg-slate-950 px-3 py-1.5 rounded-lg border border-white/10/60 w-fit">
-                <LockOpen className="h-3.5 w-3.5 text-brand-500" />
-                <span>Unlocked & Free</span>
-              </div>
+              )}
             </div>
-
-            {/* Row 2 */}
-            <div className="p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div className="space-y-1">
-                <div className="flex items-center space-x-2">
-                  <span className="text-xs font-bold font-mono text-slate-200">AI RECIPE COMPILER & COOK MODE</span>
-                  <span className="text-[9px] font-mono font-extrabold text-emerald-600 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-100">STABLE</span>
-                </div>
-                <p className="text-xs text-slate-400">Select active ingredients to instantly generate customizable, calorie-accurate recipes with visual step-by-step guidance.</p>
-              </div>
-              <div className="flex items-center space-x-1.5 text-xs text-white font-bold bg-slate-950 px-3 py-1.5 rounded-lg border border-white/10/60 w-fit">
-                <LockOpen className="h-3.5 w-3.5 text-brand-500" />
-                <span>Unlocked & Free</span>
-              </div>
-            </div>
-
-            {/* Row 3 */}
-            <div className="p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div className="space-y-1">
-                <div className="flex items-center space-x-2">
-                  <span className="text-xs font-bold font-mono text-slate-200">AI CALORIE PLATE SCANNER</span>
-                  <span className="text-[9px] font-mono font-extrabold text-blue-600 bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/20 font-semibold">REFINING</span>
-                </div>
-                <p className="text-xs text-slate-400">Scan photos of complete dishes or meal slips to calculate portion distribution, macronutrients, and calorie density automatically.</p>
-              </div>
-              <div className="flex items-center space-x-1.5 text-xs text-white font-bold bg-slate-950 px-3 py-1.5 rounded-lg border border-white/10/60 w-fit">
-                <LockOpen className="h-3.5 w-3.5 text-brand-500" />
-                <span>Unlocked & Free</span>
-              </div>
-            </div>
-
-            {/* Row 4 */}
-            <div className="p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div className="space-y-1">
-                <div className="flex items-center space-x-2">
-                  <span className="text-xs font-bold font-mono text-slate-200">HOUSEHOLD FAMILY SYNC</span>
-                  <span className="text-[9px] font-mono font-extrabold text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-100 font-semibold">v0.2.0 LAUNCH</span>
-                </div>
-                <p className="text-xs text-slate-400">Synchronize pantry item updates across multiple active screens and phones. (Currently in sandbox offline emulation mode).</p>
-              </div>
-              <div className="flex items-center space-x-1.5 text-xs text-slate-500 font-semibold bg-slate-950/50 px-3 py-1.5 rounded-lg border border-white/5/60 w-fit">
-                <Calendar className="h-3.5 w-3.5 text-slate-600" />
-                <span>Planned for July 18</span>
-              </div>
-            </div>
-
-          </div>
+          ))}
         </div>
       </section>
 
-      {/* SUSTAINABLE & PRIVACY COMMITMENT */}
-      <section className="max-w-4xl mx-auto bg-white/5/40 border border-white/10/60 rounded-3xl p-8 text-center space-y-4">
-        <ShieldCheck className="h-10 w-10 text-brand-500 mx-auto" />
-        <h4 className="text-lg font-bold font-display text-white">Our Sustainable Commitment</h4>
-        <p className="text-xs text-slate-400 font-sans leading-relaxed max-w-xl mx-auto">
-          We do not sell ingredient tracking logs or household food habit analytics to data brokers or advertising networks. We run a secure, privacy-first smart kitchen service, prioritizing genuine zero-waste behavior over telemetry harvesting.
+      {/* 5. 0% COMMISSION PLEDGE GUARANTEE */}
+      <section className="bg-gradient-to-r from-emerald-950/40 via-slate-900 to-emerald-950/40 border border-emerald-500/30 p-8 sm:p-12 rounded-[36px] text-center max-w-4xl mx-auto space-y-4">
+        <ShieldCheck className="w-12 h-12 text-emerald-400 mx-auto" />
+        <h3 className="text-2xl font-bold font-display text-white">The Plately 0% Commission Guarantee</h3>
+        <p className="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
+          We believe high-commission delivery apps are draining neighborhood culinary culture. Our promise is permanent: we will never take percentage cuts of your food orders.
         </p>
       </section>
 
