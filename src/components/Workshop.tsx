@@ -21,9 +21,57 @@ import {
   DollarSign, 
   Utensils, 
   Printer, 
-  Share2 
+  Share2,
+  ChevronLeft,
+  ChevronRight,
+  Maximize2
 } from 'lucide-react';
 import { PageType } from '../types';
+
+const PREVIEW_SLIDES = [
+  {
+    title: 'Command Center Dashboard',
+    tag: 'Operational Radar',
+    src: '/previews/02_workshop_dashboard.png',
+    desc: 'Real-time revenue stream, orders today, target prep times, AI Agent shift briefing recommendations, and live ticket stream.',
+  },
+  {
+    title: 'Visual Website Studio',
+    tag: 'AI Storefront Builder',
+    src: '/previews/07_workshop_website_builder.png',
+    desc: 'Multimodal prompt canvas, live design tokens, reorderable visual content blocks, and instant storefront publishing.',
+  },
+  {
+    title: 'Kitchen Display System (KDS)',
+    tag: 'Line Radar',
+    src: '/previews/05_workshop_kds.png',
+    desc: 'Color-coded ticket lifecycles, timer alerts, audio chimes, and instant one-click line bumping for kitchen staff.',
+  },
+  {
+    title: 'Menu & Dynamic Pricing',
+    tag: 'Catalog Engine',
+    src: '/previews/03_workshop_menu.png',
+    desc: 'Pre-populated authentic dish catalog, instant 86-ing / sold out toggles, dietary badges, and prep time controls.',
+  },
+  {
+    title: 'Table Reservations & Floor Plan',
+    tag: 'Dine-In Management',
+    src: '/previews/06_workshop_reservations.png',
+    desc: 'Realtime interactive table bookings with instant guest confirmations, notes, and 0% third-party aggregator take.',
+  },
+  {
+    title: 'Public Online Storefront',
+    tag: 'Customer Experience',
+    src: '/previews/09_storefront_kamolon.png',
+    desc: 'High-speed public storefront with table booking, online ordering, and authentic restaurant brand identity.',
+  },
+  {
+    title: 'Custom Domains & DNS Verification',
+    tag: 'Network Settings',
+    src: '/previews/08_workshop_settings_domains.png',
+    desc: 'Automated CNAME verification, zero-config SSL, and branded subdomains on workshop.theplately.com.',
+  },
+];
 
 interface WorkshopProps {
   onNavigate?: (page: PageType) => void;
@@ -32,6 +80,7 @@ interface WorkshopProps {
 
 export default function Workshop({ onNavigate, onOpenBetaModal }: WorkshopProps) {
   const [activeTab, setActiveTab] = useState<'kds' | 'studio' | 'floorplan'>('kds');
+  const [previewSlide, setPreviewSlide] = useState(0);
   
   // Interactive KDS Demo State
   const [demoOrders, setDemoOrders] = useState([
@@ -394,6 +443,121 @@ export default function Workshop({ onNavigate, onOpenBetaModal }: WorkshopProps)
                 </div>
               </div>
             )}
+          </div>
+        </section>
+
+        {/* 2.5. LIVE OPERATING SYSTEM TOUR */}
+        <section className="space-y-10">
+          <div className="text-center max-w-3xl mx-auto space-y-3">
+            <span className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest bg-emerald-500/10 px-3.5 py-1.5 rounded-full border border-emerald-500/20">
+              PRODUCTION OPERATING SYSTEM TOUR
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black font-display text-white">
+              Inside Plately Workshop OS
+            </h2>
+            <p className="text-slate-400 text-sm md:text-base leading-relaxed">
+              Explore authentic high-resolution captures from our live merchant deployment at <span className="text-emerald-400 font-mono">workshop.theplately.com</span>.
+            </p>
+          </div>
+
+          <div className="bg-[#0f141f] border border-white/10 rounded-[32px] p-4 sm:p-8 shadow-2xl space-y-6">
+            {/* Slide Navigation Buttons */}
+            <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-slate-800">
+              {PREVIEW_SLIDES.map((slide, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setPreviewSlide(idx)}
+                  className={`px-4 py-2.5 rounded-2xl text-xs font-bold whitespace-nowrap transition-all flex items-center space-x-2 ${
+                    previewSlide === idx
+                      ? 'bg-emerald-500 text-slate-950 shadow-[0_0_15px_rgba(16,185,129,0.3)]'
+                      : 'bg-slate-900/80 text-slate-400 hover:text-white border border-white/5 hover:border-white/15'
+                  }`}
+                >
+                  <span>{slide.title}</span>
+                  <span className={`text-[10px] px-1.5 py-0.5 rounded font-mono ${
+                    previewSlide === idx ? 'bg-black/20 text-slate-950' : 'bg-slate-800 text-slate-400'
+                  }`}>
+                    {slide.tag}
+                  </span>
+                </button>
+              ))}
+            </div>
+
+            {/* Active Slide Viewer with Mac-style browser chrome */}
+            <div className="space-y-4">
+              <div className="rounded-2xl border border-white/15 overflow-hidden bg-[#070a10] shadow-2xl">
+                {/* Browser bar */}
+                <div className="bg-[#161b22] px-4 py-3 border-b border-white/10 flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <span className="w-3 h-3 rounded-full bg-red-500/80 inline-block" />
+                    <span className="w-3 h-3 rounded-full bg-yellow-500/80 inline-block" />
+                    <span className="w-3 h-3 rounded-full bg-green-500/80 inline-block" />
+                    <span className="ml-3 text-xs font-mono text-slate-400 hidden sm:inline-block">
+                      https://workshop.theplately.com
+                    </span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <span className="text-[11px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">
+                      Live Production ✓
+                    </span>
+                    <a
+                      href="https://workshop.theplately.com"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-xs text-slate-400 hover:text-white flex items-center space-x-1"
+                    >
+                      <span className="hidden sm:inline">Open Live</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+                </div>
+
+                {/* Screenshot Frame */}
+                <div className="relative aspect-[16/10] bg-slate-950 overflow-hidden flex items-center justify-center">
+                  <img
+                    src={PREVIEW_SLIDES[previewSlide].src}
+                    alt={PREVIEW_SLIDES[previewSlide].title}
+                    className="w-full h-full object-cover object-top transition-opacity duration-300"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+
+              {/* Description & Navigation Controls */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2 px-2">
+                <div>
+                  <h4 className="text-lg font-bold text-white flex items-center space-x-2">
+                    <span>{PREVIEW_SLIDES[previewSlide].title}</span>
+                    <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">
+                      {PREVIEW_SLIDES[previewSlide].tag}
+                    </span>
+                  </h4>
+                  <p className="text-xs sm:text-sm text-slate-400 mt-1 max-w-2xl font-sans">
+                    {PREVIEW_SLIDES[previewSlide].desc}
+                  </p>
+                </div>
+
+                <div className="flex items-center space-x-2 self-end sm:self-auto">
+                  <button
+                    onClick={() => setPreviewSlide((prev) => (prev > 0 ? prev - 1 : PREVIEW_SLIDES.length - 1))}
+                    className="p-2.5 rounded-xl bg-slate-900 border border-white/10 text-slate-300 hover:text-white hover:border-emerald-500/50 transition-all"
+                    title="Previous Slide"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <span className="text-xs font-mono text-slate-400 px-2">
+                    {previewSlide + 1} / {PREVIEW_SLIDES.length}
+                  </span>
+                  <button
+                    onClick={() => setPreviewSlide((prev) => (prev < PREVIEW_SLIDES.length - 1 ? prev + 1 : 0))}
+                    className="p-2.5 rounded-xl bg-slate-900 border border-white/10 text-slate-300 hover:text-white hover:border-emerald-500/50 transition-all"
+                    title="Next Slide"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
