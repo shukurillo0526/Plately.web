@@ -48,6 +48,8 @@ export default function Helmet({
     // 2. Set standard SEO head tags
     setMetaTag('name', 'description', description);
     setLinkTag('canonical', canonicalUrl);
+    setLinkTag('icon', '/favicon.png?v=20261026');
+    setLinkTag('shortcut icon', '/favicon.ico?v=20261026');
 
     // 3. Set OpenGraph tags
     setMetaTag('property', 'og:title', fullTitle);
@@ -71,6 +73,8 @@ export default function Helmet({
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
       <link rel="canonical" href={canonicalUrl} />
+      <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png?v=20261026" />
+      <link rel="shortcut icon" href="/favicon.ico?v=20261026" />
       
       {/* OpenGraph */}
       <meta property="og:title" content={fullTitle} />
