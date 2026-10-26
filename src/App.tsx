@@ -123,11 +123,37 @@ const modalStaggerItem = {
   }
 };
 
+const getInitialPage = (): PageType => {
+  if (typeof window === 'undefined') return 'home';
+  const path = window.location.pathname.replace(/^\/+|\/+$/g, '');
+  const validPages: PageType[] = [
+    'features',
+    'solutions',
+    'how-it-works',
+    'ecosystem',
+    'pricing',
+    'about',
+    'faq',
+    'blog',
+    'workshop',
+  ];
+  return validPages.includes(path as PageType) ? (path as PageType) : 'home';
+};
+
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<PageType>('home');
+  const [currentPage, setCurrentPage] = useState<PageType>(getInitialPage);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [betaModalOpen, setBetaModalOpen] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
+
+  // Sync browser back/forward buttons with page state
+  useEffect(() => {
+    const handlePopState = () => {
+      setCurrentPage(getInitialPage());
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
   
   // Beta Form state
   const [email, setEmail] = useState('');
@@ -170,15 +196,15 @@ export default function App() {
       return;
     }
 
-    setIsTransitioning(true);
     setMobileMenuOpen(false);
+    setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // 450ms loading duration for beautiful perceived telemetry syncing
-    setTimeout(() => {
-      setCurrentPage(page);
-      setIsTransitioning(false);
-    }, 450);
+    // Synchronize HTML5 URL routing
+    const targetPath = page === 'home' ? '/' : `/${page}`;
+    if (window.location.pathname !== targetPath) {
+      window.history.pushState({ page }, '', targetPath);
+    }
   };
 
   const handleOpenBetaModal = () => {
@@ -461,18 +487,12 @@ export default function App() {
                   </button>
                 </div>
 
-                <div className="pt-4 flex flex-col gap-2">
+                <div className="pt-2 flex flex-col gap-2">
                   <a 
                     href="https://app.theplately.com"
-                    className="w-full py-3 bg-brand-500 hover:bg-brand-400 text-white font-bold text-xs rounded-xl text-center shadow-[0_0_15px_rgba(249,139,37,0.3)] transition-all"
+                    className="w-full py-2.5 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white font-bold text-xs rounded-xl text-center border border-white/10 transition-all"
                   >
-                    Open Web App
-                  </a>
-                  <a 
-                    href="https://app.theplately.com"
-                    className="w-full py-3 bg-white/5 hover:bg-white/10 text-white font-bold text-xs rounded-xl text-center border border-white/10 transition-all"
-                  >
-                    Sign In
+                    Sign In to Account '
                   </a>
                 </div>
               </motion.div>
