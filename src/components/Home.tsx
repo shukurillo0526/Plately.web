@@ -38,10 +38,135 @@ import {
   Layers,
   Sliders,
   ExternalLink,
-  Share2
+  Share2,
+  Smartphone,
+  ChevronLeft
 } from 'lucide-react';
 import { PageType } from '../types';
 import ActiveCookMode from './ActiveCookMode';
+
+const MOBILE_PREVIEW_SLIDES = [
+  {
+    id: 'auth',
+    title: 'Instant Sign-In',
+    subtitle: 'Porcelain Splash & SSO',
+    category: 'Authentication',
+    tag: 'Screen 01',
+    src: '/previews/mobile_01_welcome_auth.png',
+    headline: 'Dark Porcelain Plate Splash & Unified Auth',
+    desc: 'Instant onboarding with single sign-on or unified demo credentials. Connects home cooks and diners across mobile and web with zero friction.',
+    highlights: ['Dark porcelain plate branding', 'Instant passwordless / demo login', 'Synchronized session across web & mobile'],
+    badge: 'CanvasKit & Native Flutter',
+  },
+  {
+    id: 'cook',
+    title: 'What to Cook?',
+    subtitle: 'AI Recipe Matcher',
+    category: 'Cook Mode',
+    tag: 'Screen 02',
+    src: '/previews/mobile_02_cook_recipes.png',
+    headline: '5 Intelligent Match Tiers for Every Scenario',
+    desc: 'Smart tier matching: Explore, Perfect Match (100% pantry items), For You, Use It Up (expiring food), and Almost There (missing 1-2 items).',
+    highlights: ['5 specialized tier matchers', 'Prep time & calorie badges', 'One-tap step-by-step interactive cooking'],
+    badge: 'Dynamic Recipe AI',
+  },
+  {
+    id: 'shelf',
+    title: 'Living Shelf',
+    subtitle: 'Expiry Radar & Zones',
+    category: 'Smart Pantry',
+    tag: 'Screen 03',
+    src: '/previews/mobile_03_living_shelf.png',
+    headline: 'Multi-Zone Freshness & Expiry Alerts',
+    desc: 'Monitor Fridge, Freezer, and Pantry zones. Color-coded expiry alerts surface ingredients needing immediate attention to eliminate food waste.',
+    highlights: ['Fridge, Freezer & Pantry storage tabs', '3D interactive food item cards', 'Expiring soon proactive alert banner'],
+    badge: 'Local Hive Cache',
+  },
+  {
+    id: 'ingredient',
+    title: 'Add Ingredients',
+    subtitle: 'Instant Shelf Logging',
+    category: 'Inventory',
+    tag: 'Screen 04',
+    src: '/previews/mobile_04_add_ingredient_sheet.png',
+    headline: 'Frictionless Ingredient & Storage Logging',
+    desc: 'Add custom items with units, expiration timers, and category tags to keep your pantry synchronized in real time with the backend.',
+    highlights: ['Custom quantity & unit selectors', 'Storage zone allocation', 'Automatic freshness estimation'],
+    badge: 'Realtime Sync',
+  },
+  {
+    id: 'scan',
+    title: 'AI Multi-Scanner',
+    subtitle: 'Receipt OCR & Barcode',
+    category: 'Computer Vision',
+    tag: 'Screen 05',
+    src: '/previews/mobile_05_scan_camera.png',
+    headline: 'Receipt OCR, Barcode & Plate Nutrition Vision',
+    desc: 'Instantly ingest supermarket paper receipts, scan barcodes against global food databases, or photograph a plate for calorie and protein breakdown.',
+    highlights: ['Camera, Gallery & Manual input modes', 'Instant receipt text extraction', 'Barcode UPC / EAN lookup engine'],
+    badge: 'Multimodal AI Vision',
+  },
+  {
+    id: 'order',
+    title: 'Order Mode',
+    subtitle: 'Tashkent Dining & Deals',
+    category: 'Dining & Takeout',
+    tag: 'Screen 06',
+    src: '/previews/mobile_06_order_restaurants.png',
+    headline: 'Explore Local Restaurants with 0% Markup',
+    desc: 'Browse Tashkent & Chilanzar dining scenes, filter by Uzbek, Korean, or Healthy cuisines, and order directly with zero commission fee markups.',
+    highlights: ['Local neighborhood discovery', 'Deals near you & promotional discounts', 'Direct merchant ordering with 0% fee'],
+    badge: '0% Middleman Fees',
+  },
+  {
+    id: 'restaurant',
+    title: 'Restaurant Profile',
+    subtitle: 'Kamolon Osh Markazi',
+    category: 'Storefront',
+    tag: 'Screen 07',
+    src: '/previews/mobile_07_kamolon_restaurant_detail.png',
+    headline: 'Authentic Menus, Reviews & Table Booking',
+    desc: 'View Kamolon Osh Markazi signature plov, verified customer reviews, direct delivery dispatch, and interactive table reservations.',
+    highlights: ['Rich dish imagery & allergen info', 'Customer star ratings & verified reviews', 'Direct table reservation requests'],
+    badge: 'Verified Merchant',
+  },
+  {
+    id: 'feeds',
+    title: 'Video Food Feeds',
+    subtitle: 'Culinary Reels & Shorts',
+    category: 'Social Discovery',
+    tag: 'Screen 08',
+    src: '/previews/mobile_08_order_social_feeds.png',
+    headline: 'TikTok-Style Video Discovery with One-Tap Order',
+    desc: 'Watch high-energy chef reels and food reviews. Tap "Order Now" directly from video to cart without leaving the stream.',
+    highlights: ['High-definition vertical video stream', 'One-tap direct order & map directions', 'Interactive likes, shares, and comments'],
+    badge: 'Reels Video Stream',
+  },
+  {
+    id: 'community',
+    title: 'Community Explore',
+    subtitle: 'Trending Food Spots',
+    category: 'Community',
+    tag: 'Screen 09',
+    src: '/previews/mobile_09_explore_community.png',
+    headline: 'Discover Trending Food Trends & Local Hotspots',
+    desc: 'Follow top home cooks, discover trending street foods in your neighborhood, and share recipe creations with friends.',
+    highlights: ['Curated culinary trends', 'Nearby top-rated dishes & hidden gems', 'Diner community ratings & recommendations'],
+    badge: 'Social Culinary Grid',
+  },
+  {
+    id: 'profile',
+    title: 'Gamified Profile',
+    subtitle: 'XP, Streaks & Badges',
+    category: 'Gamification',
+    tag: 'Screen 10',
+    src: '/previews/mobile_10_user_profile.png',
+    headline: 'Track Sustainability Impact & Level Up',
+    desc: 'Real-time metrics: Meals Cooked, Items Saved from Waste, and Day Streaks. Earn badges, unlock culinary achievements, and gain XP.',
+    highlights: ['XP level progression & stats tracker', 'Household meals cooked & items saved counters', 'Culinary badges & achievement trophies'],
+    badge: 'Level 1 Demo Master',
+  },
+];
 
 interface HomeProps {
   onNavigate: (page: PageType) => void;
@@ -51,6 +176,7 @@ interface HomeProps {
 export default function Home({ onNavigate, onOpenBetaModal }: HomeProps) {
   // Ecosystem Platform Switcher (Diner App vs. Workshop Kitchen OS)
   const [platformView, setPlatformView] = useState<'diner' | 'workshop'>('diner');
+  const [mobileSlide, setMobileSlide] = useState<number>(0);
   const [workshopTab, setWorkshopTab] = useState<'kds' | 'studio'>('kds');
   const [kdsOrders, setKdsOrders] = useState([
     { id: '101', table: 'Table 4', type: 'Dine-In', items: ['2x Plov Samarkand', '1x Achichuk Salad', '1x Green Tea'], status: 'preparing', time: '11m', priority: 'VIP' },
@@ -1913,6 +2039,179 @@ export default function Home({ onNavigate, onOpenBetaModal }: HomeProps) {
             </div>
           </div>
 
+        </div>
+      </section>
+
+            {/* 2.5 LIVE MOBILE APP EXPERIENCE (Flutter Consumer App Showroom) */}
+      <section id="mobile-experience" className="scroll-mt-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        <div className="text-center max-w-3xl mx-auto space-y-4">
+          <div className="inline-flex items-center space-x-2 bg-brand-500/10 border border-brand-500/30 px-4 py-1.5 rounded-full text-xs font-bold text-brand-400">
+            <Smartphone className="w-3.5 h-3.5" />
+            <span>REAL MOBILE CONSUMER APP • FLUTTER & CANVASKIT ENGINE</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black font-display tracking-tight text-white leading-tight">
+            Plately in Your Pocket.
+          </h2>
+          <p className="text-slate-400 text-sm md:text-base leading-relaxed max-w-2xl mx-auto">
+            Explore authentic captures from our live consumer app. Powered by Flutter, CanvasKit, and Hive offline storage—seamlessly connecting home cooks with local neighborhood dining.
+          </p>
+        </div>
+
+        {/* Interactive Mobile Showcase Container */}
+        <div className="bg-[#0f141f] border border-white/10 rounded-[36px] p-6 sm:p-10 shadow-2xl space-y-8 relative overflow-hidden">
+          {/* Ambient glow */}
+          <div className="absolute top-1/4 left-10 w-96 h-96 bg-brand-500/10 rounded-full blur-[120px] pointer-events-none" />
+          <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none" />
+
+          {/* Quick Screen Pill Selectors */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-slate-800 relative z-10">
+            {MOBILE_PREVIEW_SLIDES.map((slide, idx) => (
+              <button
+                key={slide.id}
+                onClick={() => setMobileSlide(idx)}
+                className={`px-3.5 py-2 rounded-2xl text-xs font-bold whitespace-nowrap transition-all flex items-center space-x-2 ${
+                  mobileSlide === idx
+                    ? 'bg-brand-500 text-white shadow-[0_0_15px_rgba(249,139,37,0.4)]'
+                    : 'bg-slate-900/80 text-slate-400 hover:text-white border border-white/5 hover:border-white/15'
+                }`}
+              >
+                <span>{slide.title}</span>
+                <span className={`text-[10px] px-1.5 py-0.5 rounded font-mono ${
+                  mobileSlide === idx ? 'bg-black/20 text-white' : 'bg-slate-800 text-slate-400'
+                }`}>
+                  {slide.tag}
+                </span>
+              </button>
+            ))}
+          </div>
+
+          {/* Two-Column Showcase: Phone Frame + Detail Panel */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center relative z-10">
+            
+            {/* Left: Authentic iPhone 14 Pro Mobile Frame */}
+            <div className="lg:col-span-5 flex justify-center">
+              <div className="relative w-[300px] sm:w-[330px] aspect-[393/852] bg-[#0c0f16] border-[10px] border-[#1e2533] rounded-[48px] shadow-2xl overflow-hidden ring-1 ring-white/10 flex flex-col group">
+
+                {/* Screenshot Viewer */}
+                <div className="w-full h-full bg-black relative flex items-center justify-center">
+                  <img
+                    key={MOBILE_PREVIEW_SLIDES[mobileSlide].src}
+                    src={MOBILE_PREVIEW_SLIDES[mobileSlide].src}
+                    alt={MOBILE_PREVIEW_SLIDES[mobileSlide].title}
+                    className="w-full h-full object-cover object-top transition-all duration-300"
+                    loading="lazy"
+                  />
+                  {/* Subtle glass reflection highlight */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/0 pointer-events-none" />
+                </div>
+
+                {/* iPhone Home Bar */}
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/60 rounded-full z-40 pointer-events-none" />
+              </div>
+            </div>
+
+            {/* Right: Screen Intelligence & Insights */}
+            <div className="lg:col-span-7 space-y-6">
+              <div className="space-y-3">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs font-mono font-bold text-brand-400 bg-brand-500/10 border border-brand-500/30 px-3 py-1 rounded-full uppercase">
+                    {MOBILE_PREVIEW_SLIDES[mobileSlide].category}
+                  </span>
+                  <span className="text-[11px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">
+                    {MOBILE_PREVIEW_SLIDES[mobileSlide].badge}
+                  </span>
+                  <span className="text-xs text-slate-500 font-mono">
+                    Screen {mobileSlide + 1} of {MOBILE_PREVIEW_SLIDES.length}
+                  </span>
+                </div>
+
+                <h3 className="text-2xl sm:text-3xl font-black font-display text-white leading-tight">
+                  {MOBILE_PREVIEW_SLIDES[mobileSlide].headline}
+                </h3>
+
+                <p className="text-sm text-slate-300 font-sans leading-relaxed">
+                  {MOBILE_PREVIEW_SLIDES[mobileSlide].desc}
+                </p>
+              </div>
+
+              {/* Feature Highlights Grid */}
+              <div className="bg-[#141b25] border border-white/5 rounded-2xl p-5 space-y-3">
+                <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider font-mono">
+                  Engineered Highlights:
+                </h4>
+                <div className="space-y-2">
+                  {MOBILE_PREVIEW_SLIDES[mobileSlide].highlights.map((highlight, idx) => (
+                    <div key={idx} className="flex items-start space-x-2.5 text-xs text-slate-300">
+                      <div className="p-0.5 rounded bg-brand-500/20 text-brand-400 mt-0.5 shrink-0">
+                        <Check className="w-3.5 h-3.5" />
+                      </div>
+                      <span>{highlight}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Unified Demo Account Box */}
+              <div className="bg-gradient-to-r from-brand-500/10 via-emerald-500/10 to-transparent border border-brand-500/30 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div className="space-y-1">
+                  <div className="flex items-center space-x-2">
+                    <ShieldCheck className="w-4 h-4 text-brand-400" />
+                    <span className="text-xs font-bold text-white font-mono">LIVE DEMO READY</span>
+                  </div>
+                  <p className="text-[11px] text-slate-300 font-mono">
+                    Email: <span className="text-brand-300 font-bold">demo@plately.app</span> • Password: <span className="text-brand-300 font-bold">12345678</span>
+                  </p>
+                </div>
+                <a
+                  href="https://app.theplately.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-4 py-2 bg-brand-500 hover:bg-brand-400 text-white text-xs font-bold rounded-xl transition-all shadow-[0_0_15px_rgba(249,139,37,0.3)] flex items-center space-x-1.5 shrink-0"
+                >
+                  <span>Launch Live App</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
+
+              {/* Navigation Controls */}
+              <div className="flex items-center justify-between pt-2 border-t border-white/5">
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={() => setMobileSlide((prev) => (prev > 0 ? prev - 1 : MOBILE_PREVIEW_SLIDES.length - 1))}
+                    className="p-2.5 rounded-xl bg-slate-900 border border-white/10 text-slate-300 hover:text-white hover:border-brand-500/50 transition-all flex items-center space-x-1"
+                    title="Previous Screen"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                    <span className="text-xs font-medium hidden sm:inline">Prev</span>
+                  </button>
+                  <button
+                    onClick={() => setMobileSlide((prev) => (prev < MOBILE_PREVIEW_SLIDES.length - 1 ? prev + 1 : 0))}
+                    className="p-2.5 rounded-xl bg-slate-900 border border-white/10 text-slate-300 hover:text-white hover:border-brand-500/50 transition-all flex items-center space-x-1"
+                    title="Next Screen"
+                  >
+                    <span className="text-xs font-medium hidden sm:inline">Next</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+
+                {/* Dot Indicators */}
+                <div className="flex items-center space-x-1.5">
+                  {MOBILE_PREVIEW_SLIDES.map((_, dotIdx) => (
+                    <button
+                      key={dotIdx}
+                      onClick={() => setMobileSlide(dotIdx)}
+                      className={`h-2 rounded-full transition-all ${
+                        mobileSlide === dotIdx ? 'w-6 bg-brand-500' : 'w-2 bg-slate-700 hover:bg-slate-500'
+                      }`}
+                      title={`Go to Screen ${dotIdx + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
+
+            </div>
+
+          </div>
         </div>
       </section>
 
