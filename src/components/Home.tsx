@@ -517,6 +517,8 @@ export default function Home({ onNavigate, onOpenBetaModal }: HomeProps) {
                           <img 
                             src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&auto=format&fit=crop&q=80" 
                             alt="Garlic Chicken Rice Bowl" 
+                            loading="lazy"
+                            decoding="async"
                             className="w-full h-full object-cover group-hover:scale-102 transition-all duration-300 brightness-95"
                             referrerPolicy="no-referrer"
                           />
@@ -627,6 +629,8 @@ export default function Home({ onNavigate, onOpenBetaModal }: HomeProps) {
                             <img 
                               src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&auto=format&fit=crop&q=80" 
                               alt="Garlic Chicken Rice Bowl" 
+                              loading="lazy"
+                              decoding="async"
                               className="absolute inset-0 w-full h-full object-cover opacity-35"
                               referrerPolicy="no-referrer"
                             />

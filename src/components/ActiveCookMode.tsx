@@ -238,6 +238,8 @@ export default function ActiveCookMode({ isEmbedded = false, onClose }: ActiveCo
                   <img 
                     src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&q=80&w=600" 
                     alt="Tortillas cooking" 
+                    loading="lazy"
+                    decoding="async"
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover brightness-75"
                   />
