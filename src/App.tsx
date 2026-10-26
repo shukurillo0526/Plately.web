@@ -261,8 +261,8 @@ export default function App() {
               onClick={() => handlePageNavigation('home')}
               className="flex items-center space-x-2.5 cursor-pointer group"
             >
-              <div className="w-11 h-11 rounded-xl overflow-hidden bg-black/50 group-hover:scale-105 transition-all flex items-center justify-center shadow-sm border border-white/10">
-                <img src={logo} alt="Plately" className="w-full h-full object-cover opacity-90" referrerPolicy="no-referrer" />
+              <div className="w-11 h-11 group-hover:scale-105 transition-all flex items-center justify-center">
+                <img src={logo} alt="Plately" className="w-full h-full object-contain drop-shadow-md" referrerPolicy="no-referrer" />
               </div>
               <div>
                 <span className="text-xl font-bold font-display tracking-tight text-white">Plately</span>
@@ -514,8 +514,8 @@ export default function App() {
           {/* Logo and Tagline Column */}
           <div className="md:col-span-4 space-y-4">
             <div className="flex items-center space-x-2.5">
-              <div className="w-9 h-9 rounded-lg overflow-hidden bg-black/50 flex items-center justify-center shadow-sm border border-white/10">
-                <img src={logo} alt="Plately" className="w-full h-full object-cover opacity-90" referrerPolicy="no-referrer" />
+              <div className="w-9 h-9 flex items-center justify-center">
+                <img src={logo} alt="Plately" className="w-full h-full object-contain drop-shadow-md" referrerPolicy="no-referrer" />
               </div>
               <span className="text-lg font-bold font-display text-white tracking-tight">Plately</span>
             </div>
