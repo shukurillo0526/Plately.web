@@ -28,6 +28,10 @@ import About from './components/About';
 import Faq from './components/Faq';
 import Blog from './components/Blog';
 import Workshop from './components/Workshop';
+import Privacy from './components/Privacy';
+import Terms from './components/Terms';
+import Support from './components/Support';
+import DeleteAccount from './components/DeleteAccount';
 import Helmet from './components/Helmet';
 import PageLoader from './components/PageLoader';
 import PerformanceMonitor from './components/PerformanceMonitor';
@@ -89,6 +93,30 @@ const getSEO = (page: PageType) => {
         description: 'The all-in-one operating engine for restaurants: AI-native website studio, real-time KDS, visual floor plan table reservations, and Noor fleet dispatch.',
         canonicalUrl: 'https://theplately.com/workshop',
       };
+    case 'privacy':
+      return {
+        title: 'Privacy Policy — Plately Food Ecosystem',
+        description: 'Learn how Plately protects your pantry and account data with zero ads, zero data selling, and full data deletion rights.',
+        canonicalUrl: 'https://theplately.com/privacy',
+      };
+    case 'terms':
+      return {
+        title: 'Terms of Service — Plately',
+        description: 'Terms governing Plately applications, free pantry tracking, fair-use AI allowances, and food safety disclaimers.',
+        canonicalUrl: 'https://theplately.com/terms',
+      };
+    case 'support':
+      return {
+        title: 'Help & Customer Support — Plately',
+        description: 'Get help with receipt scanning, smart pantry synchronization, and Workshop restaurant onboarding.',
+        canonicalUrl: 'https://theplately.com/support',
+      };
+    case 'delete-account':
+      return {
+        title: 'Delete Account & Data Erasure — Plately',
+        description: 'Request permanent deletion of your Plately account, inventory records, and personal profile data.',
+        canonicalUrl: 'https://theplately.com/delete-account',
+      };
     case 'home':
     default:
       return {
@@ -136,6 +164,10 @@ const getInitialPage = (): PageType => {
     'faq',
     'blog',
     'workshop',
+    'privacy',
+    'terms',
+    'support',
+    'delete-account',
   ];
   return validPages.includes(path as PageType) ? (path as PageType) : 'home';
 };
@@ -523,6 +555,10 @@ export default function App() {
             {currentPage === 'about' && <About onOpenBetaModal={handleOpenBetaModal} />}
             {currentPage === 'faq' && <Faq />}
             {currentPage === 'blog' && <Blog />}
+            {currentPage === 'privacy' && <Privacy />}
+            {currentPage === 'terms' && <Terms />}
+            {currentPage === 'support' && <Support />}
+            {currentPage === 'delete-account' && <DeleteAccount />}
           </motion.div>
         )}
       </main>
@@ -604,14 +640,13 @@ export default function App() {
           <div className="flex space-x-4">
             <span className="text-slate-400 font-sans font-semibold">Crafted by Shukurillo Mamarasulov</span>
             <span>•</span>
-            <a 
-              href="https://github.com/shukurillo0526/Plately/blob/main/PRIVACY_POLICY.md" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="hover:underline hover:text-slate-300"
-            >
-              Privacy Policy
-            </a>
+            <button onClick={() => handlePageNavigation('privacy')} className="hover:underline hover:text-slate-300">Privacy Policy</button>
+            <span>•</span>
+            <button onClick={() => handlePageNavigation('terms')} className="hover:underline hover:text-slate-300">Terms</button>
+            <span>•</span>
+            <button onClick={() => handlePageNavigation('support')} className="hover:underline hover:text-slate-300">Support</button>
+            <span>•</span>
+            <button onClick={() => handlePageNavigation('delete-account')} className="hover:underline hover:text-slate-300 text-rose-400/80">Delete Account</button>
             <span>•</span>
             <span className="text-slate-400 font-sans">Contact: theplately@gmail.com</span>
           </div>

@@ -8,7 +8,11 @@ export type PageType =
   | 'about'
   | 'faq'
   | 'blog'
-  | 'workshop';
+  | 'workshop'
+  | 'privacy'
+  | 'terms'
+  | 'support'
+  | 'delete-account';
 
 export interface BlogPost {
   id: string;
