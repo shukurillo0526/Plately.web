@@ -285,26 +285,30 @@ export default function App() {
       <Helmet {...seoProps} />
       <PerformanceMonitor page={currentPage} />
       
-      {/* GLOBAL NOTIFICATION RUNNING HEADER banner */}
-      <div className="bg-black/50 text-cream-200 py-2 px-4 text-center text-[11px] font-medium border-b border-white/5 flex items-center justify-center flex-wrap gap-2">
-        <div className="flex items-center space-x-1.5">
-          <Sparkles className="h-3.5 w-3.5 text-brand-400 animate-pulse" />
-          <span className="font-semibold text-white">Plately 2.0 Ecosystem Online:</span>
-          <span className="text-slate-400">Smart Kitchen App for Diners & AI-Native Workshop for Restaurants.</span>
+      {/* GLOBAL DEMO & PROJECT SHOWCASE BANNER */}
+      <div className="bg-gradient-to-r from-amber-500/20 via-brand-500/25 to-amber-500/20 text-cream-100 py-2.5 px-4 text-center text-[11px] sm:text-xs font-medium border-b border-brand-500/30 flex items-center justify-center flex-wrap gap-2.5 shadow-sm">
+        <div className="flex items-center space-x-2">
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-brand-500 text-white uppercase tracking-wider">
+            Demo Showcase
+          </span>
+          <span className="font-semibold text-white">Project Showcase & Live Demonstration:</span>
+          <span className="text-slate-300">
+            Plately is an interactive technology showcase previewing full consumer & restaurant capabilities (Pre-Launch).
+          </span>
         </div>
-        <div className="flex items-center space-x-2 text-[11px]">
+        <div className="flex items-center space-x-2 text-[11px] sm:text-xs">
           <a 
             href="https://app.theplately.com"
-            className="underline text-brand-400 hover:text-brand-300 font-bold"
+            className="underline text-brand-300 hover:text-white font-bold flex items-center gap-1"
           >
-            Open Diner App →
+            Launch Full App Demo →
           </a>
-          <span className="text-white/20">•</span>
+          <span className="text-white/30">•</span>
           <button 
             onClick={() => handlePageNavigation('workshop')}
-            className="underline text-emerald-400 hover:text-emerald-300 font-bold"
+            className="underline text-emerald-300 hover:text-white font-bold"
           >
-            Explore Workshop OS →
+            Workshop Kitchen Sandbox →
           </button>
         </div>
       </div>
@@ -323,8 +327,13 @@ export default function App() {
                 <img src={logo} alt="Plately" className="w-full h-full object-contain drop-shadow-md" referrerPolicy="no-referrer" />
               </div>
               <div>
-                <span className="text-xl font-bold font-display tracking-tight text-white">Plately</span>
-                <span className="text-[10px] font-mono text-brand-400 block -mt-1 font-semibold uppercase tracking-wider">Food Ecosystem</span>
+                <div className="flex items-center space-x-2">
+                  <span className="text-xl font-bold font-display tracking-tight text-white">Plately</span>
+                  <span className="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 uppercase tracking-wider">
+                    Showcase
+                  </span>
+                </div>
+                <span className="text-[10px] font-mono text-brand-400 block -mt-0.5 font-semibold uppercase tracking-wider">Food Ecosystem Demo</span>
               </div>
             </div>
 
@@ -410,7 +419,7 @@ export default function App() {
                 href="https://app.theplately.com"
                 className="px-4 py-2 bg-brand-500 hover:bg-brand-400 text-white text-xs font-bold rounded-xl shadow-[0_0_15px_rgba(249,139,37,0.3)] transition-all flex items-center space-x-1"
               >
-                <span>Open Diner App</span>
+                <span>Launch App Demo</span>
                 <span className="text-[10px] opacity-75">↗</span>
               </a>
             </div>

@@ -302,9 +302,9 @@ export default function Home({ onNavigate, onOpenBetaModal }: HomeProps) {
           
           {/* Hero Left Column */}
           <div className="lg:col-span-5 space-y-8 text-center lg:text-left">
-            <div className="inline-flex items-center space-x-2 bg-brand-500/10 border border-brand-500/30 rounded-full px-4 py-1.5 text-xs font-semibold text-brand-400">
-              <Sparkles className="h-3.5 w-3.5 text-brand-400 animate-pulse" />
-              <span>Plately 2.0 — Unified Culinary & Restaurant Ecosystem</span>
+            <div className="inline-flex items-center space-x-2 bg-amber-500/10 border border-amber-500/30 rounded-full px-4 py-1.5 text-xs font-semibold text-amber-400">
+              <Sparkles className="h-3.5 w-3.5 text-amber-400 animate-pulse" />
+              <span>PROJECT SHOWCASE • Live Ecosystem Capabilities Demo (Pre-Launch)</span>
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold font-display leading-[1.1] tracking-tight text-white">
@@ -316,28 +316,34 @@ export default function Home({ onNavigate, onOpenBetaModal }: HomeProps) {
             </h1>
             
             <p className="text-base sm:text-lg text-slate-300 font-sans max-w-xl mx-auto lg:mx-0 leading-relaxed">
-              Where home cooks eliminate food waste with AI pantries, and independent restaurants thrive with AI website builders, realtime KDS, and direct table reservations—completely bypassing 30% aggregator fees.
+              Plately is an interactive technology showcase demonstrating the unified future of food: how home cooks eliminate food waste with AI pantries, and independent restaurants thrive with AI website builders, realtime KDS, and direct table reservations.
             </p>
             
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5">
-              <a 
-                id="hero-primary-cta"
-                href="https://app.theplately.com"
-                className="w-full sm:w-auto px-7 py-3.5 bg-brand-500 hover:bg-brand-400 text-white font-bold rounded-xl shadow-[0_0_20px_rgba(249,139,37,0.4)] hover:shadow-[0_0_30px_rgba(249,139,37,0.6)] transition-all flex items-center justify-center space-x-2 group text-sm"
-              >
-                <Utensils className="h-4 w-4" />
-                <span>Open Diner App</span>
-                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </a>
-              
-              <button 
-                id="hero-secondary-cta"
-                onClick={() => onNavigate('workshop')}
-                className="w-full sm:w-auto px-7 py-3.5 bg-white/5 hover:bg-white/10 text-white border border-white/10 font-bold rounded-xl transition-all flex items-center justify-center space-x-2 text-sm"
-              >
-                <ChefHat className="h-4 w-4 text-brand-400" />
-                <span>Explore Workshop OS</span>
-              </button>
+            <div className="space-y-3">
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5">
+                <a 
+                  id="hero-primary-cta"
+                  href="https://app.theplately.com"
+                  className="w-full sm:w-auto px-7 py-3.5 bg-brand-500 hover:bg-brand-400 text-white font-bold rounded-xl shadow-[0_0_20px_rgba(249,139,37,0.4)] hover:shadow-[0_0_30px_rgba(249,139,37,0.6)] transition-all flex items-center justify-center space-x-2 group text-sm"
+                >
+                  <Utensils className="h-4 w-4" />
+                  <span>Launch Live App Demo</span>
+                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </a>
+                
+                <button 
+                  id="hero-secondary-cta"
+                  onClick={() => onNavigate('workshop')}
+                  className="w-full sm:w-auto px-7 py-3.5 bg-white/5 hover:bg-white/10 text-white border border-white/10 font-bold rounded-xl transition-all flex items-center justify-center space-x-2 text-sm"
+                >
+                  <ChefHat className="h-4 w-4 text-brand-400" />
+                  <span>Explore Workshop OS</span>
+                </button>
+              </div>
+              <div className="flex items-center justify-center lg:justify-start space-x-2 text-xs text-amber-400/90 font-medium pt-1">
+                <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+                <span>Pre-Launch Demo: Full capabilities active for live interactive testing.</span>
+              </div>
             </div>
 
             {/* Micro proof banner */}
